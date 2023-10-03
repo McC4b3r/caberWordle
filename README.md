@@ -41,7 +41,7 @@ Your game should include the following:
   - Can only be used when starting a new game, disabled once a guess has been made
 - have the on-screen keyboard reflect the state of the clues (keys turn grey, yellow, and green)
 
-Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that follows all instructions but looks simple will be considered above a feature-incomplete but  one.
+Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that fulfills all (non-stretch) features but is visually simplistic will be considered more highly than a partially complete but shiny one.
 
 You do **not** need to implement the following:
 
