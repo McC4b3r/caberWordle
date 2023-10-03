@@ -30,7 +30,7 @@ Your game should include the following:
 - random word choice on every game start
 - a way to specify the answer to guess by line number of `wordlist.txt`
   - e.g. specifying `16117` in the answer specifier field should set the answer to `ocean` and clear the guesses.
-  - Can only be toggled when starting a new game, disabled once a guess has been made
+  - Can only be used when starting a new game, disabled once a guess has been made
 - a way to reset the game - clear the current guesses and pick a new random answer.
 - an on-screen keyboard that the user can input guesses onto (both by clicking keys as buttons and by typing)
 
@@ -38,7 +38,7 @@ Your game should include the following:
 
 - a hard-mode toggle
   - Hard mode requires players to include letters marked as green and yellow in subsequent guesses
-  - Can only be toggled when starting a new game, disabled once a guess has been made
+  - Can only be used when starting a new game, disabled once a guess has been made
 - have the on-screen keyboard reflect the state of the clues (keys turn grey, yellow, and green)
 
 Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that follows all instructions but looks simple will be considered above a feature-incomplete but  one.
