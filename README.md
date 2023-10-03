@@ -51,6 +51,7 @@ You do **not** need to implement the following:
 - Feedback, report a bug, etc.
 - Animations
 
+### FAQ
 
 **Can I use a library? Copy code from other sites?**
 
