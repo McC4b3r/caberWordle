@@ -20,18 +20,28 @@ The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wi
 > Multiple instances of the same letter in a guess, such as the "o"s in "robot",
 > will be colored green or yellow only if the letter also appears multiple times in the answer;
 > otherwise, excess repeating letters will be colored gray.
-> The game has a "hard mode" option,
-> which requires players to include letters marked as green and yellow in subsequent guesses.
 
 For this take-home interview, please create a variant of wordle that also allows words that have 2 to 4 letters in it.
 
 Your game should include the following:
 
+> Basic Requirements
+
 - random word choice on every game start
 - a way to specify the answer to guess by line number of `wordlist.txt`
-  - e.g. specifying `16117` in the answer specifier field should set the answer to `ocean`.
+  - e.g. specifying `16117` in the answer specifier field should set the answer to `ocean` and clear the guesses.
+  - Can only be toggled when starting a new game, disabled once a guess has been made
+- a way to reset the game - clear the current guesses and pick a new random answer.
+- an on-screen keyboard that the user can input guesses onto (both by clicking keys as buttons and by typing)
+
+> Stretch Features
+
 - a hard-mode toggle
-- a way to reset the game- clear the current guesses and pick a new random answer.
+  - Hard mode requires players to include letters marked as green and yellow in subsequent guesses
+  - Can only be toggled when starting a new game, disabled once a guess has been made
+- have the on-screen keyboard reflect the state of the clues (keys turn grey, yellow, and green)
+
+Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that follows all instructions but looks simple will be considered above a feature-incomplete but  one.
 
 You do **not** need to implement the following:
 
@@ -41,7 +51,6 @@ You do **not** need to implement the following:
 - Feedback, report a bug, etc.
 - Animations
 
-### FAQ
 
 **Can I use a library? Copy code from other sites?**
 
