@@ -7,12 +7,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Interview Prompt
 
 Create a game similar to [Wordle](https://www.nytimes.com/games/wordle/index.html),
-except where you allow words with that are between 2 and 5 characters long.
-All other rules stay the same.
+but using a custom word list we provide containing words that are 2 to 5 characters long.
+All other rules will remain the same.
 
 The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wiki/Wordle#Gameplay)):
 
-> ... a five-letter word is chosen which players aim to guess within six tries.
+> ... a random word is chosen which players aim to guess within six tries.
 > After every guess, each letter is marked as either green, yellow or gray:
 > green indicates that letter is correct and in the correct position,
 > yellow means it is in the answer but not in the right position,
@@ -21,17 +21,18 @@ The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wi
 > will be colored green or yellow only if the letter also appears multiple times in the answer;
 > otherwise, excess repeating letters will be colored gray.
 
-For this take-home interview, please create a variant of wordle that also allows words that have 2 to 4 letters in it.
+For this take-home interview, please create a variant of wordle that allows words that have 2 to 5 letters in them, using the list found in `wordlist.txt`.
 
 Your game should include the following:
 
 ### Basic Requirements
 
-- random word choice on every game start
-- a way to specify the answer to guess by line number of `wordlist.txt`
+- random word choice from the list on every game start
+- a way to specify an answer by line number in `wordlist.txt`
   - e.g. specifying `16117` in the answer specifier field should set the answer to `ocean` and clear the guesses.
-  - Can only be used when starting a new game, disabled once a guess has been made
+  - This can only be used when starting a new game, disabled once a guess has been made
 - a way to reset the game - clear the current guesses and pick a new random answer.
+- a list of 6 guess slots with the correct number of characters for the answer word
 - an on-screen keyboard that the user can input guesses onto (both by clicking keys as buttons and by typing)
 
 ### Stretch Features
