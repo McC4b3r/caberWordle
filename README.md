@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Interview Prompt
 
 Create a game similar to [Wordle](https://www.nytimes.com/games/wordle/index.html),
-but using a custom word list we provide containing words that are 2 to 5 characters long.
+but using a custom word list we provide containing words composed of unique characters that are 2 to 5 characters long.
 All other rules will remain the same.
 
 The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wiki/Wordle#Gameplay)):
@@ -17,11 +17,8 @@ The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wi
 > green indicates that letter is correct and in the correct position,
 > yellow means it is in the answer but not in the right position,
 > while gray indicates it is not in the answer at all.
-> Multiple instances of the same letter in a guess, such as the "o"s in "robot",
-> will be colored green or yellow only if the letter also appears multiple times in the answer;
-> otherwise, excess repeating letters will be colored gray.
 
-For this take-home interview, please create a variant of wordle that allows words that have 2 to 5 letters in them, using the list found in `wordlist.txt`.
+For this take-home interview, please create a variant of wordle that allows words that have 2 to 5 unique letters in them, using the list found in `wordlist.txt`.
 
 Your game should include the following:
 
@@ -29,18 +26,18 @@ Your game should include the following:
 
 - random word choice from the list on every game start
 - a way to specify an answer by line number in `wordlist.txt`
-  - e.g. specifying `16117` in the answer specifier field should set the answer to `ocean` and clear the guesses.
-  - This can only be used when starting a new game, disabled once a guess has been made
+  - e.g. specifying `80` in the answer specifier field should set the answer to `equip`
 - a way to reset the game - clear the current guesses and pick a new random answer.
 - a list of 6 guess slots with the correct number of characters for the answer word
-- an on-screen keyboard that the user can input guesses onto (both by clicking keys as buttons and by typing)
+  - guessed words should have colors that reflected how it matched to the answer, as per above
+- an on-screen keyboard that the user can input guesses onto by clicking the keys
 
 ### Stretch Features
 
 - a hard-mode toggle
   - Hard mode requires players to include letters marked as green and yellow in subsequent guesses
-  - Can only be used when starting a new game, disabled once a guess has been made
 - have the on-screen keyboard reflect the state of the clues (keys turn grey, yellow, and green)
+- have the on-screen keyboard accept keyboard events in addition to manual mouse clicking
 
 Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that fulfills all (non-stretch) features but is visually simplistic will be considered more highly than a partially complete but shiny one.
 
@@ -63,8 +60,7 @@ For example, you can use a library that renders a keyboard on-screen for the key
 
 **What do I do if a user changes the game settings mid-game?**
 
-You should not allow the user to change game settings once they start playing.
-Game settings like hard mode and answer specifier should become disabled after the first guess.
+Reset the game (guesses & answer)
 
 **What should the layout / interface look like?**
 
