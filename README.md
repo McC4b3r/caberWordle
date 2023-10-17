@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Interview Prompt
 
 Create a game similar to [Wordle](https://www.nytimes.com/games/wordle/index.html),
-but using a custom word list we provide containing words composed of unique characters that are 2 to 5 characters long.
+but using a custom word list we provide containing words  that are 2 to 5 unique characters long.
 All other rules will remain the same.
 
 The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wiki/Wordle#Gameplay)):
