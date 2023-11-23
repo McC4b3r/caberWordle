@@ -23,7 +23,10 @@ export const Row = ({
       onChange={(value) => handleInputChange(value, rowIndex)}
     >
       {Array.from({ length }, (_, index) => (
-        <PinInputField key={index} />
+        <PinInputField
+          key={index}
+          sx={{ textTransform: 'uppercase' }}
+        />
       ))}
     </PinInput>
   </HStack>

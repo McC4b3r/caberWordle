@@ -1,6 +1,6 @@
-import React from 'react';
 import { Box, Divider, Heading } from '@chakra-ui/react';
-import { TextGrid } from './components/textGrid';
+import { WordBoard } from './components/textGrid';
+import { Keyboard } from './components/keyboard';
 
 const App = () => {
   return (
@@ -9,7 +9,8 @@ const App = () => {
         Sandbardle
       </Heading>
       <Divider orientation='horizontal' />
-      <TextGrid length={5} />
+      <WordBoard length={5} />
+      <Keyboard />
     </Box>
   );
 }
