@@ -1,11 +1,15 @@
 import React from 'react';
-import { ChakraProvider } from '@chakra-ui/react'
-import { Box } from '@chakra-ui/react';
+import { Box, Divider, Heading } from '@chakra-ui/react';
+import { TextGrid } from './components/textGrid';
 
-function App() {
+const App = () => {
   return (
     <Box>
-      this is only the beginning
+      <Heading display="flex" justifyContent="center" my={4}>
+        Sandbardle
+      </Heading>
+      <Divider orientation='horizontal' />
+      <TextGrid length={5} />
     </Box>
   );
 }
