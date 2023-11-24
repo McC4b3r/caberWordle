@@ -1,26 +1,42 @@
-import React, { useRef, useState } from "react";
+import { useRef, Dispatch, SetStateAction } from "react";
 import KeyboardReact from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
 import { Box } from "@chakra-ui/react";
 
-export const Keyboard = () => {
-  const [input, setInput] = useState("");
+type KeyboardProps = {
+  inputValues: string[];
+  setInputValues: Dispatch<SetStateAction<string[]>>;
+  handleInputChange: (value: string, rowIndex: number) => void;
+  currentRow: number;
+  setCurrentRow: Dispatch<SetStateAction<number>>;
+  length: number;
+}
+
+export const Keyboard = ({
+  inputValues,
+  setInputValues,
+  handleInputChange,
+  currentRow,
+  setCurrentRow,
+  length
+}: KeyboardProps) => {
   const keyboard = useRef<any>();
 
   const onChange = (input: string) => {
-    setInput(input);
-    console.log("Input changed", input);
+    if (input.length <= length) {
+      const newValues = [...inputValues];
+      newValues[currentRow] = input;
+      setInputValues(newValues);
+    }
   };
 
   const onKeyPress = (button: string) => {
     console.log("Button pressed", button);
-  };
 
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    setInput(input);
-    keyboard.current?.setInput(input);
+    if (button === "{enter}") {
+      setCurrentRow((prevRow: number) => prevRow < 5 ? prevRow + 1 : prevRow);
+    }
   };
 
   return (
