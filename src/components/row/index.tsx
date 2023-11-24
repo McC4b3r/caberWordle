@@ -24,6 +24,7 @@ export const Row = ({
           cursor="default"
           border="1px solid"
           borderColor="black"
+          px="0"
           _hover={{ borderColor: 'black' }}
           _focusVisible={{ borderColor: 'black' }}
           aria-label="Please enter your letter"

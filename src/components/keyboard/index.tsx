@@ -19,7 +19,7 @@ export const Keyboard = ({
   }, [inputValues, currentRow]);
 
   const onKeyPress = (button: string) => {
-    if (button === "{enter}") {
+    if (button === "{enter}" && inputValues[currentRow].length === length) {
       setCurrentRow(prevRow => {
         keyboard.current.setInput("");
         return prevRow < 5 ? prevRow + 1 : prevRow;
