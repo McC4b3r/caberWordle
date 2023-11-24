@@ -18,18 +18,20 @@ const App = () => {
 
   const handleKeyPress = (key: string) => {
     const currentInput = inputValues[currentRow];
-    if (key === 'Enter') {
-      if (currentInput.length === wordLength) {
-        setCurrentRow(prevRow => (prevRow < 5 ? prevRow + 1 : prevRow));
-      }
-    } else if (key === 'Backspace') {
+    const isEnter = key === 'Enter';
+    const isBackspace = key === 'Backspace';
+    const canAddChar = /^[a-zA-Z]$/.test(key) && currentInput.length < wordLength;
+
+    if (isEnter && currentInput.length === wordLength) {
+      setCurrentRow(prevRow => (prevRow < 5 ? prevRow + 1 : prevRow));
+    } else if (isBackspace && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
-    } else if (currentInput.length < wordLength) {
+    } else if (canAddChar) {
       handleInputChange(currentInput + key);
     }
   };
 
-  useKeyboardInput({ handleKeyPress });
+  useKeyboardInput(handleKeyPress);
 
   return (
     <Box>

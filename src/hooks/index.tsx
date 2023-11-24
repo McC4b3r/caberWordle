@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-type UseKeyboardInputProps = {
-  handleKeyPress: (key: string) => void;
-};
-
-export const useKeyboardInput = ({ handleKeyPress }: UseKeyboardInputProps) => {
+export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const { key } = event;
