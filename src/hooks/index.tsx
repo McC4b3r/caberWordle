@@ -1,4 +1,3 @@
-// useKeyboardInput.ts
 import { useEffect } from 'react';
 
 type UseKeyboardInputProps = {

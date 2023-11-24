@@ -8,7 +8,7 @@ const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
   const [currentRow, setCurrentRow] = useState(0);
   const wordLength = 5;
-  console.log({ inputValues });
+  // console.log({ inputValues });
 
   const handleInputChange = (value: string) => {
     const newValues = [...inputValues];
@@ -21,7 +21,7 @@ const App = () => {
       setCurrentRow((prevRow) => (prevRow < 5 ? prevRow + 1 : prevRow));
     } else if (key === 'Backspace') {
       handleInputChange(inputValues[currentRow].slice(0, -1));
-    } else if (/^[a-zA-Z]$/.test(key) && inputValues[currentRow].length < wordLength) {
+    } else if (inputValues[currentRow].length < wordLength) {
       handleInputChange(inputValues[currentRow] + key);
     }
   };
