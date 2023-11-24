@@ -19,6 +19,7 @@ export const Row = ({
       {Array.from({ length }, (_, index) => (
         <PinInputField
           as={Input}
+          key={index}
           isReadOnly
           cursor="default"
           border="1px solid"
@@ -26,7 +27,6 @@ export const Row = ({
           _hover={{ borderColor: 'black' }}
           _focusVisible={{ borderColor: 'black' }}
           aria-label="Please enter your letter"
-          key={index}
           sx={{ textTransform: 'uppercase' }}
         />
       ))}

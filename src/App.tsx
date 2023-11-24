@@ -12,7 +12,7 @@ const App = () => {
 
   const handleInputChange = (value: string) => {
     const newValues = [...inputValues];
-    newValues[currentRow] = value;
+    newValues[currentRow] = value.toLowerCase();
     setInputValues(newValues);
   };
 
