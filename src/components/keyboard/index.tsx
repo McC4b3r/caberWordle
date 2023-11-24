@@ -5,18 +5,16 @@ import "react-simple-keyboard/build/css/index.css";
 import { Box } from "@chakra-ui/react";
 
 type KeyboardProps = {
+  length: number;
   inputValues: string[];
   setInputValues: Dispatch<SetStateAction<string[]>>;
-  handleInputChange: (value: string, rowIndex: number) => void;
   currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
-  length: number;
 }
 
 export const Keyboard = ({
   inputValues,
   setInputValues,
-  handleInputChange,
   currentRow,
   setCurrentRow,
   length
@@ -24,18 +22,19 @@ export const Keyboard = ({
   const keyboard = useRef<any>();
 
   const onChange = (input: string) => {
-    if (input.length <= length) {
-      const newValues = [...inputValues];
-      newValues[currentRow] = input;
-      setInputValues(newValues);
-    }
+    const newValues = [...inputValues];
+    newValues[currentRow] = input;
+    setInputValues(newValues);
   };
 
   const onKeyPress = (button: string) => {
-    console.log("Button pressed", button);
+    // console.log("Button pressed", button);
 
     if (button === "{enter}") {
-      setCurrentRow((prevRow: number) => prevRow < 5 ? prevRow + 1 : prevRow);
+      setCurrentRow(prevRow => {
+        keyboard.current.setInput("");
+        return prevRow < 5 ? prevRow + 1 : prevRow;
+      });
     }
   };
 
@@ -50,6 +49,7 @@ export const Keyboard = ({
         layout={defaultLayout}
         onChange={onChange}
         onKeyPress={onKeyPress}
+        maxLength={length}
       />
     </Box>
   );

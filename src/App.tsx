@@ -7,6 +7,7 @@ const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
   const [currentRow, setCurrentRow] = useState(0);
   const wordLength = 5;
+  console.log({ inputValues });
 
   const handleInputChange = (value: string, currentRow: number) => {
     const newValues = [...inputValues];
@@ -29,12 +30,11 @@ const App = () => {
         setCurrentRow={setCurrentRow}
       />
       <Keyboard
+        length={wordLength}
         inputValues={inputValues}
         setInputValues={setInputValues}
-        handleInputChange={handleInputChange}
         currentRow={currentRow}
         setCurrentRow={setCurrentRow}
-        length={wordLength}
       />
     </Box>
   );

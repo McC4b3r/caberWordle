@@ -15,7 +15,7 @@ export const WordBoard = ({
   length,
   inputValues,
   setInputValues,
-  handleInputChange
+  handleInputChange,
 }: WordBoardProps) => {
 
   const rows = Array.from({ length: 6 }, (_, index) => {
