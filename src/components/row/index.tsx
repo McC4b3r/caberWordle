@@ -1,11 +1,5 @@
 import { HStack, PinInput, PinInputField } from '@chakra-ui/react';
-
-type RowProps = {
-  rowIndex: number;
-  inputValues: string[];
-  length: number;
-  handleInputChange: (word: string) => void;
-};
+import { RowProps } from '../../types';
 
 export const Row = ({
   inputValues,

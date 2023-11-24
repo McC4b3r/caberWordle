@@ -3,12 +3,7 @@ import KeyboardReact from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
 import { Box } from "@chakra-ui/react";
-
-type KeyboardProps = {
-  length: number;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
-  handleInputChange: (value: string) => void;
-}
+import { KeyboardProps } from "../../types";
 
 export const Keyboard = ({
   length,

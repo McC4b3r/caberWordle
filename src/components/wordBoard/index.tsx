@@ -1,13 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
 import { VStack } from '@chakra-ui/react';
 import { Row } from '../row';
-
-type WordBoardProps = {
-  length: number;
-  inputValues: string[];
-  handleInputChange: (value: string) => void;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
-}
+import { WordBoardProps } from '../../types';
 
 export const WordBoard = ({
   length,
