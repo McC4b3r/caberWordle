@@ -5,16 +5,13 @@ import { Row } from '../row';
 type WordBoardProps = {
   length: number;
   inputValues: string[];
-  setInputValues: Dispatch<SetStateAction<string[]>>;
   handleInputChange: (value: string) => void;
-  currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
 }
 
 export const WordBoard = ({
   length,
   inputValues,
-  setInputValues,
   handleInputChange,
 }: WordBoardProps) => {
 

@@ -24,9 +24,7 @@ const App = () => {
       <WordBoard
         length={wordLength}
         inputValues={inputValues}
-        setInputValues={setInputValues}
         handleInputChange={handleInputChange}
-        currentRow={currentRow}
         setCurrentRow={setCurrentRow}
       />
       <Keyboard
