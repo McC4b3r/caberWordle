@@ -18,6 +18,7 @@ export const Row = ({
     >
       {Array.from({ length }, (_, index) => (
         <PinInputField
+          aria-label="Please enter your letter"
           key={index}
           sx={{ textTransform: 'uppercase' }}
         />

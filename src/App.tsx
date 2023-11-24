@@ -7,7 +7,7 @@ const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
   const [currentRow, setCurrentRow] = useState(0);
   const wordLength = 5;
-  console.log({ inputValues });
+  // console.log({ inputValues });
 
   const handleInputChange = (value: string) => {
     const newValues = [...inputValues];

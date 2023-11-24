@@ -9,7 +9,6 @@ export const WordBoard = ({
 }: WordBoardProps) => {
 
   const rows = Array.from({ length: 6 }, (_, index) => {
-
     return (
       <Row
         key={index}

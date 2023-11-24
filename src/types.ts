@@ -8,9 +8,9 @@ export type WordBoardProps = {
 }
 
 export type RowProps = {
-  rowIndex: number;
-  inputValues: string[];
   length: number;
+  inputValues: string[];
+  rowIndex: number;
   handleInputChange: (word: string) => void;
 };
 
