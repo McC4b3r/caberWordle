@@ -4,7 +4,7 @@ type RowProps = {
   rowIndex: number;
   inputValues: string[];
   length: number;
-  handleInputChange: (word: string, index: number) => void;
+  handleInputChange: (word: string) => void;
 };
 
 export const Row = ({
@@ -20,7 +20,7 @@ export const Row = ({
       placeholder=''
       size="lg"
       value={inputValues[rowIndex]}
-      onChange={(value) => handleInputChange(value, rowIndex)}
+      onChange={(value) => handleInputChange(value)}
     >
       {Array.from({ length }, (_, index) => (
         <PinInputField

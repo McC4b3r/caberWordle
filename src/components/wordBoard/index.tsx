@@ -6,7 +6,7 @@ type WordBoardProps = {
   length: number;
   inputValues: string[];
   setInputValues: Dispatch<SetStateAction<string[]>>;
-  handleInputChange: (value: string, rowIndex: number) => void;
+  handleInputChange: (value: string) => void;
   currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
 }

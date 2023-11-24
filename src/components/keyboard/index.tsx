@@ -6,26 +6,16 @@ import { Box } from "@chakra-ui/react";
 
 type KeyboardProps = {
   length: number;
-  inputValues: string[];
-  setInputValues: Dispatch<SetStateAction<string[]>>;
-  currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
+  handleInputChange: (value: string) => void;
 }
 
 export const Keyboard = ({
-  inputValues,
-  setInputValues,
-  currentRow,
+  length,
   setCurrentRow,
-  length
+  handleInputChange,
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
-
-  const onChange = (input: string) => {
-    const newValues = [...inputValues];
-    newValues[currentRow] = input;
-    setInputValues(newValues);
-  };
 
   const onKeyPress = (button: string) => {
     // console.log("Button pressed", button);
@@ -47,7 +37,7 @@ export const Keyboard = ({
       <KeyboardReact
         keyboardRef={r => (keyboard.current = r)}
         layout={defaultLayout}
-        onChange={onChange}
+        onChange={handleInputChange}
         onKeyPress={onKeyPress}
         maxLength={length}
       />

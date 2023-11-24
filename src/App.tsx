@@ -9,7 +9,7 @@ const App = () => {
   const wordLength = 5;
   console.log({ inputValues });
 
-  const handleInputChange = (value: string, currentRow: number) => {
+  const handleInputChange = (value: string) => {
     const newValues = [...inputValues];
     newValues[currentRow] = value;
     setInputValues(newValues);
@@ -31,9 +31,7 @@ const App = () => {
       />
       <Keyboard
         length={wordLength}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        currentRow={currentRow}
+        handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
       />
     </Box>
