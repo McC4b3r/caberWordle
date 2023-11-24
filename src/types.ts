@@ -16,6 +16,8 @@ export type RowProps = {
 
 export type KeyboardProps = {
   length: number;
+  inputValues: string[];
+  currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
   handleInputChange: (value: string) => void;
 }

@@ -1,4 +1,4 @@
-import { HStack, PinInput, PinInputField } from '@chakra-ui/react';
+import { HStack, Input, PinInput, PinInputField } from '@chakra-ui/react';
 import { RowProps } from '../../types';
 
 export const Row = ({
@@ -6,8 +6,8 @@ export const Row = ({
   rowIndex,
   length,
   handleInputChange,
-
 }: RowProps) => (
+
   <HStack key={rowIndex}>
     <PinInput
       type='alphanumeric'
@@ -18,6 +18,13 @@ export const Row = ({
     >
       {Array.from({ length }, (_, index) => (
         <PinInputField
+          as={Input}
+          isReadOnly
+          cursor="default"
+          border="1px solid"
+          borderColor="black"
+          _hover={{ borderColor: 'black' }}
+          _focusVisible={{ borderColor: 'black' }}
           aria-label="Please enter your letter"
           key={index}
           sx={{ textTransform: 'uppercase' }}

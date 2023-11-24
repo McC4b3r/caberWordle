@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import KeyboardReact from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
@@ -9,8 +9,14 @@ export const Keyboard = ({
   length,
   setCurrentRow,
   handleInputChange,
+  inputValues,
+  currentRow
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
+
+  useEffect(() => {
+    keyboard.current.setInput(inputValues[currentRow]);
+  }, [inputValues, currentRow]);
 
   const onKeyPress = (button: string) => {
     if (button === "{enter}") {
