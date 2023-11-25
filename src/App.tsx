@@ -13,6 +13,7 @@ import { Keyboard } from './components/keyboard';
 import { useKeyboardInput } from './hooks';
 import { ValidationResult } from './types';
 import { validateGuess } from './utils';
+import { AnswerSpecifier } from './components/answerSpecifier';
 
 const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
@@ -21,6 +22,8 @@ const App = () => {
   const [targetWord, setTargetWord] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
+
+  console.log({ targetWord })
 
   useEffect(() => {
     const getWords = async () => {
@@ -92,8 +95,16 @@ const App = () => {
         inputValues={inputValues}
         currentRow={currentRow}
         handleInputChange={handleInputChange}
-        setCurrentRow={setCurrentRow}
         validationResults={validationResults}
+      />
+      <AnswerSpecifier
+        wordList={wordList}
+        length={targetWord.length}
+        setCurrentRow={setCurrentRow}
+        handleInputChange={handleInputChange}
+        handleGuessSubmit={handleGuessSubmit}
+        validationResults={validationResults}
+        targetWord={targetWord}
       />
       <Keyboard
         length={targetWord.length}

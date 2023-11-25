@@ -5,8 +5,7 @@ export type GameProps = {
   inputValues: string[];
   currentRow: number;
   handleInputChange: (value: string) => void;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
-  validationResults?: ValidationResult[][];
+  validationResults: ValidationResult[][];
 }
 
 export type RowProps = {
@@ -15,14 +14,25 @@ export type RowProps = {
   rowIndex: number;
   currentRow: number;
   handleInputChange: (word: string) => void;
-  validationResults?: ValidationResult[][];
+  validationResults: ValidationResult[][];
 };
 
 export type KeyboardProps = GameProps & {
   handleGuessSubmit: (guess: string) => void;
+  setCurrentRow: Dispatch<SetStateAction<number>>;
 };
 
 export type ValidationResult = {
   letter: string;
   status: 'correct' | 'present' | 'wrong';
 };
+
+export type AnswerSpecifierProps = {
+  wordList: string[];
+  length: number;
+  handleInputChange: (word: string) => void;
+  setCurrentRow: Dispatch<SetStateAction<number>>;
+  handleGuessSubmit: (guess: string) => void;
+  validationResults: ValidationResult[][];
+  targetWord: string;
+}
