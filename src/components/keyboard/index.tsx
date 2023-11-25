@@ -10,7 +10,8 @@ export const Keyboard = ({
   setCurrentRow,
   handleInputChange,
   inputValues,
-  currentRow
+  currentRow,
+  handleGuessSubmit
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
 
@@ -20,6 +21,7 @@ export const Keyboard = ({
 
   const onKeyPress = (button: string) => {
     if (button === "{enter}" && inputValues[currentRow].length === length) {
+      handleGuessSubmit(inputValues[currentRow]);
       setCurrentRow(prevRow => {
         keyboard.current.setInput("");
         return prevRow < 5 ? prevRow + 1 : prevRow;

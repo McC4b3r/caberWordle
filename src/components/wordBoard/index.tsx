@@ -1,12 +1,14 @@
 import { VStack } from '@chakra-ui/react';
 import { Row } from '../row';
-import { WordBoardProps } from '../../types';
+import { GameProps } from '../../types';
 
 export const WordBoard = ({
   length,
   inputValues,
   handleInputChange,
-}: WordBoardProps) => {
+  validationResults,
+  currentRow,
+}: GameProps) => {
 
   const rows = Array.from({ length: 6 }, (_, index) => {
     return (
@@ -14,8 +16,10 @@ export const WordBoard = ({
         key={index}
         inputValues={inputValues}
         rowIndex={index}
+        currentRow={currentRow}
         length={length}
         handleInputChange={handleInputChange}
+        validationResults={validationResults}
       />
     )
   }

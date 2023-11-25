@@ -11,6 +11,8 @@ import {
 import { WordBoard } from './components/wordBoard';
 import { Keyboard } from './components/keyboard';
 import { useKeyboardInput } from './hooks';
+import { ValidationResult } from './types';
+import { validateGuess } from './utils';
 
 const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
@@ -18,7 +20,9 @@ const App = () => {
   const [wordList, setWordList] = useState<string[]>([]);
   const [targetWord, setTargetWord] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  // console.log({ inputValues });
+  const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
+
+  console.log({ targetWord, validationResults })
 
   const setRandomWord = (lib: string[]) => {
     if (lib.length > 0) {
@@ -29,6 +33,7 @@ const App = () => {
 
   const resetGame = () => {
     setInputValues(Array(6).fill(""))
+    setValidationResults([]);
     setRandomWord(wordList);
   }
 
@@ -52,6 +57,16 @@ const App = () => {
 
   let length = targetWord.length;
 
+  const handleGuessSubmit = (guess: string) => {
+    const results = validateGuess(guess, targetWord);
+
+    setValidationResults(prevResults => {
+      const newResults = [...prevResults];
+      newResults[currentRow] = results;
+      return newResults;
+    });
+  };
+
   const handleInputChange = (value: string) => {
     const newValues = [...inputValues];
     newValues[currentRow] = value.toLowerCase();
@@ -65,6 +80,7 @@ const App = () => {
     const canAddChar = /^[a-zA-Z]$/.test(key) && currentInput.length < length;
 
     if (isEnter && currentInput.length === length) {
+      handleGuessSubmit(currentInput);
       setCurrentRow(prevRow => (prevRow < 5 ? prevRow + 1 : prevRow));
     } else if (isBackspace && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
@@ -92,8 +108,10 @@ const App = () => {
       <WordBoard
         length={length}
         inputValues={inputValues}
+        currentRow={currentRow}
         handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
+        validationResults={validationResults}
       />
       <Keyboard
         length={length}
@@ -101,6 +119,8 @@ const App = () => {
         currentRow={currentRow}
         handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
+        handleGuessSubmit={handleGuessSubmit}
+        validationResults={validationResults}
       />
       <Center mt={8}>
         <Button onClick={resetGame}>
