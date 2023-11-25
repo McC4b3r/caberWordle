@@ -1,14 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
 
-// export type WordBoardProps = {
-//   length: number;
-//   inputValues: string[];
-//   currentRow: number;
-//   handleInputChange: (value: string) => void;
-//   setCurrentRow: Dispatch<SetStateAction<number>>;
-//   validationResults?: ValidationResult[][];
-// }
-
 export type GameProps = {
   length: number;
   inputValues: string[];
@@ -30,15 +21,6 @@ export type RowProps = {
 export type KeyboardProps = GameProps & {
   handleGuessSubmit: (guess: string) => void;
 };
-
-// export type KeyboardProps = {
-//   length: number;
-//   inputValues: string[];
-//   currentRow: number;
-//   handleInputChange: (value: string) => void;
-//   setCurrentRow: Dispatch<SetStateAction<number>>;
-//   validationResults?: ValidationResult[][];
-// }
 
 export type ValidationResult = {
   letter: string;

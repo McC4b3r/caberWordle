@@ -9,6 +9,7 @@ export const Row = ({
   handleInputChange,
   validationResults,
 }: RowProps) => (
+
   <HStack key={rowIndex}>
     <PinInput
       type='alphanumeric'
