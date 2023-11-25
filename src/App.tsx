@@ -22,21 +22,6 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
 
-  console.log({ targetWord, validationResults })
-
-  const setRandomWord = (lib: string[]) => {
-    if (lib.length > 0) {
-      const randomIndex = Math.floor(Math.random() * lib.length);
-      setTargetWord(lib[randomIndex]);
-    }
-  }
-
-  const resetGame = () => {
-    setInputValues(Array(6).fill(""))
-    setValidationResults([]);
-    setRandomWord(wordList);
-  }
-
   useEffect(() => {
     const getWords = async () => {
       try {
@@ -45,26 +30,29 @@ const App = () => {
         const wordArray = words.split('\n');
         setWordList(wordArray);
         setRandomWord(wordArray);
-
       } catch (err) {
-        console.log(err);
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
-
     getWords();
   }, []);
 
-  let length = targetWord.length;
+  const setRandomWord = (lib: string[]) => {
+    const randomIndex = Math.floor(Math.random() * lib.length);
+    setTargetWord(lib[randomIndex]);
+  }
+
+  const resetGame = () => {
+    setInputValues(Array(6).fill(""));
+    setValidationResults([]);
+    setRandomWord(wordList);
+  }
 
   const handleGuessSubmit = (guess: string) => {
     const results = validateGuess(guess, targetWord);
-
-    setValidationResults(prevResults => {
-      const newResults = [...prevResults];
-      newResults[currentRow] = results;
-      return newResults;
-    });
+    setValidationResults(prevResults => [...prevResults, results]);
   };
 
   const handleInputChange = (value: string) => {
@@ -75,16 +63,12 @@ const App = () => {
 
   const handleKeyPress = (key: string) => {
     const currentInput = inputValues[currentRow];
-    const isEnter = key === 'Enter';
-    const isBackspace = key === 'Backspace';
-    const canAddChar = /^[a-zA-Z]$/.test(key) && currentInput.length < length;
-
-    if (isEnter && currentInput.length === length) {
+    if (key === 'Enter' && currentInput.length === targetWord.length) {
       handleGuessSubmit(currentInput);
-      setCurrentRow(prevRow => (prevRow < 5 ? prevRow + 1 : prevRow));
-    } else if (isBackspace && currentInput.length > 0) {
+      setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+    } else if (key === 'Backspace' && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
-    } else if (canAddChar) {
+    } else if (/^[a-zA-Z]$/.test(key) && currentInput.length < targetWord.length) {
       handleInputChange(currentInput + key);
     }
   };
@@ -101,12 +85,10 @@ const App = () => {
 
   return (
     <Box>
-      <Heading display="flex" justifyContent="center" my={4}>
-        Sandbardle
-      </Heading>
+      <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
       <Divider orientation='horizontal' />
       <WordBoard
-        length={length}
+        length={targetWord.length}
         inputValues={inputValues}
         currentRow={currentRow}
         handleInputChange={handleInputChange}
@@ -114,7 +96,7 @@ const App = () => {
         validationResults={validationResults}
       />
       <Keyboard
-        length={length}
+        length={targetWord.length}
         inputValues={inputValues}
         currentRow={currentRow}
         handleInputChange={handleInputChange}
@@ -123,9 +105,7 @@ const App = () => {
         validationResults={validationResults}
       />
       <Center mt={8}>
-        <Button onClick={resetGame}>
-          Reset Game
-        </Button>
+        <Button onClick={resetGame}>Reset Game</Button>
       </Center>
     </Box>
   );
