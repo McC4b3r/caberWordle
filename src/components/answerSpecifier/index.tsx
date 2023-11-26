@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import {
   Heading,
   VStack,
@@ -12,11 +12,12 @@ import { AnswerSpecifierProps } from '../../types';
 export const AnswerSpecifier = ({
   wordList,
   availableWords,
+  selectedWord,
+  setSelectedWord,
   setCurrentRow,
   handleGuessSubmit,
   handleInputChange,
 }: AnswerSpecifierProps) => {
-  const [selectedWord, setSelectedWord] = useState('');
 
   const wordNum = (word: string) => wordList.indexOf(word) + 1;
   const isDisabled = selectedWord.length === 0;

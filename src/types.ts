@@ -30,6 +30,8 @@ export type ValidationResult = {
 export type AnswerSpecifierProps = {
   wordList: string[];
   length: number;
+  selectedWord: string;
+  setSelectedWord: Dispatch<SetStateAction<string>>;
   handleInputChange: (word: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
   handleGuessSubmit: (guess: string) => void;

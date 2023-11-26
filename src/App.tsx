@@ -23,6 +23,7 @@ const App = () => {
   const [wordList, setWordList] = useState<string[]>([]);
   const [availableWords, setAvailableWords] = useState<string[]>([]);
   const [targetWord, setTargetWord] = useState('');
+  const [selectedWord, setSelectedWord] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
   const [isWinner, setIsWinner] = useState<boolean | null>(null);
@@ -58,6 +59,7 @@ const App = () => {
 
   const resetGameAndCloseModal = () => {
     setInputValues(Array(6).fill(''));
+    setSelectedWord('');
     setValidationResults([]);
     setRandomWord(wordList);
     setAvailableWords(wordList.filter(word => word.length === targetWord.length));
@@ -123,6 +125,8 @@ const App = () => {
       <AnswerSpecifier
         wordList={wordList}
         availableWords={availableWords}
+        selectedWord={selectedWord}
+        setSelectedWord={setSelectedWord}
         length={targetWord.length}
         setCurrentRow={setCurrentRow}
         handleInputChange={handleInputChange}
