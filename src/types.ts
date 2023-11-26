@@ -33,6 +33,13 @@ export type AnswerSpecifierProps = {
   handleInputChange: (word: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
   handleGuessSubmit: (guess: string) => void;
-  validationResults: ValidationResult[][];
+  availableWords: string[];
+}
+
+export type FinishedmodalProps = {
+  isWinner: boolean | null;
+  isOpen: boolean;
   targetWord: string;
+  resetGame: () => void;
+  // onClose: () => void;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
   Heading,
   VStack,
@@ -6,44 +6,36 @@ import {
   Select,
   Flex,
   Button,
-} from '@chakra-ui/react'
-import { AnswerSpecifierProps } from '../../types'
+} from '@chakra-ui/react';
+import { AnswerSpecifierProps } from '../../types';
 
 export const AnswerSpecifier = ({
   wordList,
-  length,
+  availableWords,
   setCurrentRow,
   handleGuessSubmit,
   handleInputChange,
-  targetWord
 }: AnswerSpecifierProps) => {
   const [selectedWord, setSelectedWord] = useState('');
-  const [availableWords, setAvailableWords] = useState<string[]>([]);
-
-  useEffect(() => {
-    setAvailableWords(wordList.filter(word => word.length === length));
-  }, [wordList, length]);
 
   const wordNum = (word: string) => wordList.indexOf(word) + 1;
+  const isDisabled = selectedWord.length === 0;
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedWord(e.target.value);
-  }
+  };
 
   const handleSubmit = () => {
     handleInputChange(selectedWord);
     handleGuessSubmit(selectedWord);
+    setSelectedWord('');
     setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
-
-    if (selectedWord !== targetWord) {
-      setAvailableWords(prevWords => prevWords.filter(word => word !== selectedWord));
-    }
-  }
+  };
 
   return (
-    <Container maxW="md" mt={8} mb={4}>
+    <Container maxW='md' mt={8} mb={4}>
       <VStack>
-        <Heading size="xs">
+        <Heading size='xs'>
           Answer Specifier
         </Heading>
         <Flex>
@@ -58,6 +50,7 @@ export const AnswerSpecifier = ({
           </Select>
           <Button
             ml={2}
+            isDisabled={isDisabled}
             onClick={handleSubmit}
           >
             Guess
@@ -65,5 +58,5 @@ export const AnswerSpecifier = ({
         </Flex>
       </VStack>
     </Container>
-  )
-}
+  );
+};

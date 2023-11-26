@@ -7,55 +7,78 @@ import {
   Spinner,
   AbsoluteCenter,
   Center,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { WordBoard } from './components/wordBoard';
 import { Keyboard } from './components/keyboard';
+import { AnswerSpecifier } from './components/answerSpecifier';
+import { FinishedModal } from './components/finishedModal';
 import { useKeyboardInput } from './hooks';
 import { ValidationResult } from './types';
 import { validateGuess } from './utils';
-import { AnswerSpecifier } from './components/answerSpecifier';
 
 const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
   const [currentRow, setCurrentRow] = useState(0);
   const [wordList, setWordList] = useState<string[]>([]);
+  const [availableWords, setAvailableWords] = useState<string[]>([]);
   const [targetWord, setTargetWord] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
-
-  console.log({ targetWord })
+  const [isWinner, setIsWinner] = useState<boolean | null>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const getWords = async () => {
-      try {
-        const res = await fetch('/wordlist.txt');
-        const words = await res.text();
-        const wordArray = words.split('\n');
-        setWordList(wordArray);
-        setRandomWord(wordArray);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+      const res = await fetch('/wordlist.txt');
+      const words = await res.text();
+      const wordArray = words.split('\n');
+      setWordList(wordArray);
+      setRandomWord(wordArray);
+      setIsLoading(false);
     };
-    getWords();
+
+    getWords().catch(console.error);
   }, []);
 
-  const setRandomWord = (lib: string[]) => {
-    const randomIndex = Math.floor(Math.random() * lib.length);
-    setTargetWord(lib[randomIndex]);
-  }
+  useEffect(() => {
+    setAvailableWords(wordList.filter(word => word.length === targetWord.length));
+  }, [wordList, targetWord.length]);
 
-  const resetGame = () => {
-    setInputValues(Array(6).fill(""));
+  useEffect(() => {
+    if (isWinner !== null) {
+      onOpen();
+    }
+  }, [isWinner, onOpen]);
+
+  const setRandomWord = (wordArray: string[]) => {
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    setTargetWord(wordArray[randomIndex]);
+  };
+
+  const resetGameAndCloseModal = () => {
+    setInputValues(Array(6).fill(''));
     setValidationResults([]);
     setRandomWord(wordList);
-  }
+    setAvailableWords(wordList.filter(word => word.length === targetWord.length));
+    setCurrentRow(0);
+    setIsWinner(null);
+    onClose();
+  };
 
   const handleGuessSubmit = (guess: string) => {
     const results = validateGuess(guess, targetWord);
     setValidationResults(prevResults => [...prevResults, results]);
+
+    if (guess === targetWord) {
+      setIsWinner(true);
+    } else if (currentRow === 5 && isWinner === null) {
+      setIsWinner(false);
+    }
+
+    if (guess !== targetWord) {
+      setAvailableWords(prevWords => prevWords.filter(word => word !== guess));
+    }
   };
 
   const handleInputChange = (value: string) => {
@@ -72,7 +95,7 @@ const App = () => {
     } else if (key === 'Backspace' && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
     } else if (/^[a-zA-Z]$/.test(key) && currentInput.length < targetWord.length) {
-      handleInputChange(currentInput + key);
+      handleInputChange(`${currentInput}${key}`);
     }
   };
 
@@ -99,12 +122,11 @@ const App = () => {
       />
       <AnswerSpecifier
         wordList={wordList}
+        availableWords={availableWords}
         length={targetWord.length}
         setCurrentRow={setCurrentRow}
         handleInputChange={handleInputChange}
         handleGuessSubmit={handleGuessSubmit}
-        validationResults={validationResults}
-        targetWord={targetWord}
       />
       <Keyboard
         length={targetWord.length}
@@ -116,10 +138,16 @@ const App = () => {
         validationResults={validationResults}
       />
       <Center mt={8}>
-        <Button onClick={resetGame}>Reset Game</Button>
+        <Button onClick={resetGameAndCloseModal}>Reset Game</Button>
       </Center>
+      <FinishedModal
+        isOpen={isOpen}
+        isWinner={isWinner}
+        targetWord={targetWord}
+        resetGame={resetGameAndCloseModal}
+      />
     </Box>
   );
-}
+};
 
 export default App;
