@@ -41,5 +41,4 @@ export type FinishedmodalProps = {
   isOpen: boolean;
   targetWord: string;
   resetGame: () => void;
-  // onClose: () => void;
 }

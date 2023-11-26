@@ -1,21 +1,15 @@
 import { ValidationResult } from "./types";
 
 export const validateGuess = (guess: string, targetWord: string): ValidationResult[] => {
-  const result: ValidationResult[] = [];
-
-  for (let i = 0; i < guess.length; i++) {
-    const letter = guess[i];
-    if (letter === targetWord[i]) {
-      result.push({ letter, status: 'correct' });
+  return guess.split('').map((letter, index) => {
+    if (letter === targetWord[index]) {
+      return { letter, status: 'correct' };
     } else if (targetWord.includes(letter)) {
-      result.push({ letter, status: 'present' });
+      return { letter, status: 'present' };
     } else {
-      result.push({ letter, status: 'wrong' });
+      return { letter, status: 'wrong' };
     }
-  }
-  console.log({ validation: result })
-
-  return result;
+  });
 };
 
 export const getBackgroundColor = (result: ValidationResult | undefined) => {
