@@ -69,7 +69,7 @@ describe('App', () => {
     });
   });
 
-  it('handles win scenario', async () => {
+  it('handles win scenario via physical Keyboard', async () => {
     const mockWord: string = 'apple';
     await renderAppAndWait();
 
@@ -83,6 +83,31 @@ describe('App', () => {
       expect(firstRow.map((input) => input.value)).toEqual(expectedValue);
 
       fireEvent.keyDown(document.body, { key: 'Enter' });
+
+      firstRow.forEach((input) => expect(input).toHaveStyle({ backgroundColor: 'green' }));
+    };
+
+    await simulateSuccessAttempt();
+
+    expect(screen.getByText('Victory!')).toBeInTheDocument();
+    expect(screen.getByText('You correctly guessed the word: apple')).toBeInTheDocument();
+  });
+
+  it('handles win scenario via virtual keyboard', async () => {
+    const mockWord: string = 'apple';
+    await renderAppAndWait();
+
+    const pinInputFields: HTMLInputElement[] = screen.getAllByRole('textbox');
+    const firstRow: HTMLInputElement[] = pinInputFields.slice(0, 5);
+
+    const simulateSuccessAttempt = async () => {
+      firstRow.forEach((input, index) => fireEvent.change(input, { target: { value: mockWord[index] } }));
+
+      const expectedValue: string[] = ['a', 'p', 'p', 'l', 'e'];
+      expect(firstRow.map((input) => input.value)).toEqual(expectedValue);
+
+      const virtualKeyboardEnter = screen.getByText('< enter')
+      fireEvent.click(virtualKeyboardEnter);
 
       firstRow.forEach((input) => expect(input).toHaveStyle({ backgroundColor: 'green' }));
     };
