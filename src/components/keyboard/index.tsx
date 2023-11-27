@@ -31,6 +31,7 @@ export const Keyboard = ({
 
   return (
     <Box
+      data-testid="virtual-keyboard"
       mt={10}
       maxW="container.sm"
       mx="auto"

@@ -10,7 +10,7 @@ export const Row = ({
   validationResults,
 }: RowProps) => (
 
-  <HStack key={rowIndex}>
+  <HStack key={rowIndex} data-testid="row">
     <PinInput
       type='alphanumeric'
       placeholder=''

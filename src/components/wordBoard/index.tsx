@@ -16,7 +16,6 @@ export const WordBoard = ({
         key={index}
         inputValues={inputValues}
         rowIndex={index}
-        currentRow={currentRow}
         length={length}
         handleInputChange={handleInputChange}
         validationResults={validationResults}
@@ -26,7 +25,7 @@ export const WordBoard = ({
   );
 
   return (
-    <VStack spacing={2} mt={8}>
+    <VStack spacing={2} mt={8} data-testid="word-board">
       {rows}
     </VStack>
   );

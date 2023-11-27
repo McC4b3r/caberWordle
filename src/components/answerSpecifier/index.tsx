@@ -34,19 +34,25 @@ export const AnswerSpecifier = ({
   };
 
   return (
-    <Container maxW='md' mt={8} mb={4}>
+    <Container maxW='md' mt={8} mb={4} data-testid="answer-specifier">
       <VStack>
         <Heading size='xs'>
           Answer Specifier
         </Heading>
         <Flex>
           <Select
+            data-testid="select-possible-answers"
             placeholder='Take a guess'
             value={selectedWord}
             onChange={handleSelectChange}
           >
             {availableWords.map((word, i) => (
-              <option key={i} value={word}>{`${wordNum(word)}: ${word}`}</option>
+              <option
+                aria-label={word}
+                key={i}
+                value={word}
+              >{`${wordNum(word)}: ${word}`}
+              </option>
             ))}
           </Select>
           <Button

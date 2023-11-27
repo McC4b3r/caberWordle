@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   Box,
-  Button,
   Divider,
   Heading,
   Spinner,
@@ -16,6 +15,7 @@ import { FinishedModal } from './components/finishedModal';
 import { useKeyboardInput } from './hooks';
 import { ValidationResult } from './types';
 import { validateGuess } from './utils';
+import { ResetButton } from './components/resetButton';
 
 const App = () => {
   const [inputValues, setInputValues] = useState(Array(6).fill(""));
@@ -105,7 +105,7 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <AbsoluteCenter>
+      <AbsoluteCenter data-testid="loading-spinner">
         <Spinner />
       </AbsoluteCenter>
     );
@@ -127,7 +127,6 @@ const App = () => {
         availableWords={availableWords}
         selectedWord={selectedWord}
         setSelectedWord={setSelectedWord}
-        length={targetWord.length}
         setCurrentRow={setCurrentRow}
         handleInputChange={handleInputChange}
         handleGuessSubmit={handleGuessSubmit}
@@ -139,10 +138,9 @@ const App = () => {
         handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
         handleGuessSubmit={handleGuessSubmit}
-        validationResults={validationResults}
       />
       <Center mt={8}>
-        <Button onClick={resetGameAndCloseModal}>Reset Game</Button>
+        <ResetButton resetGameAndCloseModal={resetGameAndCloseModal} />
       </Center>
       <FinishedModal
         isOpen={isOpen}

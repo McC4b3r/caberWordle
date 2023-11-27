@@ -12,12 +12,15 @@ export type RowProps = {
   length: number;
   inputValues: string[];
   rowIndex: number;
-  currentRow: number;
   handleInputChange: (word: string) => void;
   validationResults: ValidationResult[][];
 };
 
-export type KeyboardProps = BoardProps & {
+export type KeyboardProps = {
+  length: number;
+  inputValues: string[];
+  currentRow: number;
+  handleInputChange: (value: string) => void;
   handleGuessSubmit: (guess: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
 };
@@ -29,7 +32,6 @@ export type ValidationResult = {
 
 export type AnswerSpecifierProps = {
   wordList: string[];
-  length: number;
   selectedWord: string;
   setSelectedWord: Dispatch<SetStateAction<string>>;
   handleInputChange: (word: string) => void;
@@ -43,4 +45,8 @@ export type FinishedmodalProps = {
   isOpen: boolean;
   targetWord: string;
   resetGame: () => void;
+}
+
+export type ResetButtonProps = {
+  resetGameAndCloseModal: () => void;
 }
