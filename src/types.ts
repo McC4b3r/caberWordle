@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 
-export type GameProps = {
+export type BoardProps = {
   length: number;
   inputValues: string[];
   currentRow: number;
@@ -17,7 +17,7 @@ export type RowProps = {
   validationResults: ValidationResult[][];
 };
 
-export type KeyboardProps = GameProps & {
+export type KeyboardProps = BoardProps & {
   handleGuessSubmit: (guess: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
 };
