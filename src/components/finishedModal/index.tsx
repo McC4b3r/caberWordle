@@ -23,6 +23,7 @@ export const FinishedModal = ({
 
   return (
     <Modal
+      data-testid="finished-modal"
       isOpen={isOpen}
       onClose={resetGame}
       isCentered
