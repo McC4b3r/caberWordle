@@ -17,12 +17,15 @@ export type RowProps = {
 };
 
 export type KeyboardProps = {
+  updateKeyboardRef: (keyboard: any) => void;
   length: number;
   inputValues: string[];
   currentRow: number;
   handleInputChange: (value: string) => void;
   handleGuessSubmit: (guess: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
+  generateButtonColors: (keyboard: any, validationResults: ValidationResult[][]) => void;
+  validationResults: ValidationResult[][];
 };
 
 export type ValidationResult = {

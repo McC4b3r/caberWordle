@@ -1,23 +1,28 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import KeyboardReact from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
 import { Box } from "@chakra-ui/react";
 import { KeyboardProps } from "../../types";
+import './keycolors.css';
 
 export const Keyboard = ({
+  updateKeyboardRef,
   length,
   setCurrentRow,
   handleInputChange,
   inputValues,
   currentRow,
-  handleGuessSubmit
+  handleGuessSubmit,
+  generateButtonColors,
+  validationResults,
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
 
   useEffect(() => {
+    generateButtonColors(keyboard.current, validationResults);
     keyboard.current.setInput(inputValues[currentRow]);
-  }, [inputValues, currentRow]);
+  }, [keyboard, generateButtonColors, inputValues, currentRow, validationResults]);
 
   const onKeyPress = (button: string) => {
     if (button === "{enter}" && inputValues[currentRow].length === length) {
@@ -37,7 +42,11 @@ export const Keyboard = ({
       mx="auto"
     >
       <KeyboardReact
-        keyboardRef={r => (keyboard.current = r)}
+        keyboardRef={r => {
+          updateKeyboardRef(r);
+          return (keyboard.current = r)
+        }
+        }
         layout={defaultLayout}
         onChange={handleInputChange}
         onKeyPress={onKeyPress}

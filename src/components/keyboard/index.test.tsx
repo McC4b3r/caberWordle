@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Keyboard } from '.';
 
@@ -14,12 +13,15 @@ describe('Keyboard', () => {
 
     render(
       <Keyboard
+        updateKeyboardRef={() => { }}
         length={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
+        validationResults={[]}
+        generateButtonColors={() => { }}
       />
     );
 
@@ -35,12 +37,15 @@ describe('Keyboard', () => {
 
     const { rerender } = render(
       <Keyboard
+        updateKeyboardRef={() => { }}
         length={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
+        validationResults={[]}
+        generateButtonColors={() => { }}
       />
     );
 
@@ -52,12 +57,15 @@ describe('Keyboard', () => {
     currentRow = 3;
     rerender(
       <Keyboard
+        updateKeyboardRef={() => { }}
         length={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
+        validationResults={[]}
+        generateButtonColors={() => { }}
       />
     );
 
