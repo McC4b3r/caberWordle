@@ -2,8 +2,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { AnswerSpecifier } from '.';
 
 describe('AnswerSpecifier', () => {
-  const mockSetSelectedWord = jest.fn();
-  const mockSetCurrentRow = jest.fn();
+  const mockGameState = {
+    inputValues: ['', '', '', '', '', ''],
+    validationResults: [[], [], [], [], [], []],
+    currentRow: 0,
+    targetWord: '',
+    selectedWord: '',
+    isWinner: null,
+  };
+  const mockUpdateGameState = jest.fn();
   const mockHandleGuessSubmit = jest.fn();
   const mockHandleInputChange = jest.fn();
   const wordList = ['apple', 'banana', 'cherry'];
@@ -12,11 +19,10 @@ describe('AnswerSpecifier', () => {
   it('displays the correct select options with line numbers based on wordList', () => {
     render(
       <AnswerSpecifier
+        gameState={mockGameState}
+        updateGameState={mockUpdateGameState}
         wordList={wordList}
         availableWords={availableWords}
-        selectedWord=''
-        setSelectedWord={mockSetSelectedWord}
-        setCurrentRow={mockSetCurrentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         handleInputChange={mockHandleInputChange}
       />
@@ -29,35 +35,37 @@ describe('AnswerSpecifier', () => {
   });
 
   it('handles submit correctly when a word is selected and the button is clicked', () => {
-    const selectedWord = 'banana';
+    const altered = {
+      ...mockGameState,
+      selectedWord: 'banana',
+    };
 
     render(
       <AnswerSpecifier
+        gameState={altered}
+        updateGameState={mockUpdateGameState}
         wordList={wordList}
         availableWords={availableWords}
-        selectedWord={selectedWord}
-        setSelectedWord={mockSetSelectedWord}
-        setCurrentRow={mockSetCurrentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         handleInputChange={mockHandleInputChange}
       />
     );
 
     fireEvent.click(screen.getByText('Guess'));
-    expect(mockHandleInputChange).toHaveBeenCalledWith(selectedWord);
-    expect(mockHandleGuessSubmit).toHaveBeenCalledWith(selectedWord);
-    expect(mockSetSelectedWord).toHaveBeenCalledWith('');
-    expect(mockSetCurrentRow).toHaveBeenCalled();
+    expect(mockHandleInputChange).toHaveBeenCalledWith(altered.selectedWord);
+    expect(mockHandleGuessSubmit).toHaveBeenCalledWith(altered.selectedWord);
+    expect(mockUpdateGameState).toHaveBeenCalledWith({ selectedWord: '', currentRow: altered.currentRow + 1 });
+    expect(mockUpdateGameState).toHaveBeenCalled();
   });
+
 
   it('disables the Guess button when no word is selected', () => {
     render(
       <AnswerSpecifier
+        gameState={mockGameState}
+        updateGameState={mockUpdateGameState}
         wordList={wordList}
         availableWords={availableWords}
-        selectedWord=''
-        setSelectedWord={mockSetSelectedWord}
-        setCurrentRow={mockSetCurrentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         handleInputChange={mockHandleInputChange}
       />
@@ -67,13 +75,17 @@ describe('AnswerSpecifier', () => {
   });
 
   it('enables the Guess button when a word is selected', () => {
+    const altered = {
+      ...mockGameState,
+      selectedWord: 'banana',
+    };
+
     render(
       <AnswerSpecifier
+        gameState={altered}
+        updateGameState={mockUpdateGameState}
         wordList={wordList}
         availableWords={availableWords}
-        selectedWord='banana'
-        setSelectedWord={mockSetSelectedWord}
-        setCurrentRow={mockSetCurrentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         handleInputChange={mockHandleInputChange}
       />
@@ -81,4 +93,5 @@ describe('AnswerSpecifier', () => {
 
     expect(screen.getByText('Guess')).not.toBeDisabled();
   });
+
 });

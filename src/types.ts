@@ -1,31 +1,32 @@
-import { Dispatch, SetStateAction } from "react"
+export type GameState = {
+  inputValues: string[];
+  validationResults: ValidationResult[][];
+  currentRow: number;
+  targetWord: string;
+  selectedWord: string;
+  isWinner: boolean | null;
+};
+
+type UpdateGameState = (state: Partial<GameState> | ((prevState: GameState) => Partial<GameState>)) => void;
 
 export type BoardProps = {
-  length: number;
-  inputValues: string[];
-  currentRow: number;
+  gameState: GameState;
   handleInputChange: (value: string) => void;
-  validationResults: ValidationResult[][];
 }
 
 export type RowProps = {
-  length: number;
-  inputValues: string[];
+  gameState: GameState;
   rowIndex: number;
   handleInputChange: (word: string) => void;
-  validationResults: ValidationResult[][];
 };
 
 export type KeyboardProps = {
+  gameState: GameState;
+  updateGameState: UpdateGameState;
   updateKeyboardRef: (keyboard: any) => void;
-  length: number;
-  inputValues: string[];
-  currentRow: number;
   handleInputChange: (value: string) => void;
   handleGuessSubmit: (guess: string) => void;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
   generateButtonColors: (keyboard: any, validationResults: ValidationResult[][]) => void;
-  validationResults: ValidationResult[][];
 };
 
 export type ValidationResult = {
@@ -34,19 +35,17 @@ export type ValidationResult = {
 };
 
 export type AnswerSpecifierProps = {
+  gameState: GameState;
+  updateGameState: UpdateGameState;
   wordList: string[];
-  selectedWord: string;
-  setSelectedWord: Dispatch<SetStateAction<string>>;
   handleInputChange: (word: string) => void;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
   handleGuessSubmit: (guess: string) => void;
   availableWords: string[];
 }
 
 export type FinishedmodalProps = {
-  isWinner: boolean | null;
+  gameState: GameState;
   isOpen: boolean;
-  targetWord: string;
   resetGame: () => void;
 }
 

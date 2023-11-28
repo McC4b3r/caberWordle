@@ -10,11 +10,11 @@ import {
 import { FinishedmodalProps } from '../../types';
 
 export const FinishedModal = ({
-  isWinner,
+  gameState,
   isOpen,
-  targetWord,
   resetGame,
 }: FinishedmodalProps) => {
+  const { isWinner, targetWord } = gameState
 
   const modalTitle = isWinner ? "Victory!" : "Game Over";
   const modalBody = isWinner

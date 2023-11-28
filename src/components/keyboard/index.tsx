@@ -7,32 +7,39 @@ import { KeyboardProps } from "../../types";
 import './keycolors.css';
 
 export const Keyboard = ({
+  gameState,
+  updateGameState,
   updateKeyboardRef,
-  length,
-  setCurrentRow,
   handleInputChange,
-  inputValues,
-  currentRow,
   handleGuessSubmit,
   generateButtonColors,
-  validationResults,
 }: KeyboardProps) => {
+  const { inputValues, currentRow, validationResults, targetWord } = gameState
   const keyboard = useRef<any>();
 
+  // used to change the color of the virtual keyboard key colors
   useEffect(() => {
     generateButtonColors(keyboard.current, validationResults);
     keyboard.current.setInput(inputValues[currentRow]);
   }, [keyboard, generateButtonColors, inputValues, currentRow, validationResults]);
 
+  // handles the keystroke entries and the guess submission via pressing the virtual enter key
   const onKeyPress = (button: string) => {
-    if (button === "{enter}" && inputValues[currentRow].length === length) {
+    if (button === "{enter}" && inputValues[currentRow].length === targetWord.length) {
       handleGuessSubmit(inputValues[currentRow]);
-      setCurrentRow(prevRow => {
-        keyboard.current.setInput("");
-        return prevRow < 5 ? prevRow + 1 : prevRow;
+
+      // moves focus to new row and resets input to allow new guess
+      updateGameState((prevState) => {
+        const newCurrentRow = prevState.currentRow < 5 ? prevState.currentRow + 1 : prevState.currentRow;
+        return {
+          ...prevState,
+          currentRow: newCurrentRow,
+        };
       });
+      keyboard.current.setInput("");
     }
   };
+
 
   return (
     <Box
@@ -50,7 +57,7 @@ export const Keyboard = ({
         layout={defaultLayout}
         onChange={handleInputChange}
         onKeyPress={onKeyPress}
-        maxLength={length}
+        maxLength={targetWord.length}
       />
     </Box>
   );

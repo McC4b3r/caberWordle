@@ -10,27 +10,29 @@ import {
 import { AnswerSpecifierProps } from '../../types';
 
 export const AnswerSpecifier = ({
+  gameState,
+  updateGameState,
   wordList,
   availableWords,
-  selectedWord,
-  setSelectedWord,
-  setCurrentRow,
   handleGuessSubmit,
   handleInputChange,
 }: AnswerSpecifierProps) => {
-
+  const { selectedWord, currentRow } = gameState;
   const wordNum = (word: string) => wordList.indexOf(word) + 1;
   const isDisabled = selectedWord.length === 0;
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedWord(e.target.value);
+    updateGameState({ selectedWord: e.target.value });
   };
 
   const handleSubmit = () => {
+    const newCurrentRow = currentRow < 5 ? currentRow + 1 : currentRow;
     handleInputChange(selectedWord);
     handleGuessSubmit(selectedWord);
-    setSelectedWord('');
-    setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+    updateGameState({
+      selectedWord: '',
+      currentRow: newCurrentRow,
+    });
   };
 
   return (

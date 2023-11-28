@@ -1,26 +1,29 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Keyboard } from '.';
+import { GameState } from '../../types';
 
 describe('Keyboard', () => {
-  const mockSetCurrentRow = jest.fn();
+  const mockGameState: GameState = {
+    inputValues: ['put', 'row', 'nom', ''],
+    validationResults: [[]],
+    currentRow: 1,
+    targetWord: 'apple',
+    selectedWord: '',
+    isWinner: null,
+  };
+  const mockUpdateGameState = jest.fn();
   const mockHandleInputChange = jest.fn();
   const mockHandleGuessSubmit = jest.fn();
-  const length = 5;
 
   it('applies virtual keyboard input to the correct index of inputValues when a key is clicked', () => {
-    const inputValues = ['put', 'row', 'nom', ''];
-    const currentRow = 1;
 
     render(
       <Keyboard
+        gameState={mockGameState}
+        updateGameState={mockUpdateGameState}
         updateKeyboardRef={() => { }}
-        length={length}
-        setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
-        inputValues={inputValues}
-        currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
-        validationResults={[]}
         generateButtonColors={() => { }}
       />
     );
@@ -32,19 +35,19 @@ describe('Keyboard', () => {
   });
 
   it('updates the input at the correct index position when currentRow changes', () => {
-    const inputValues = ['put', 'row', 'nom', ''];
-    let currentRow = 2;
+    let newRow = 2;
+    const altered: GameState = {
+      ...mockGameState,
+      currentRow: newRow,
+    }
 
     const { rerender } = render(
       <Keyboard
+        gameState={altered}
+        updateGameState={mockUpdateGameState}
         updateKeyboardRef={() => { }}
-        length={length}
-        setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
-        inputValues={inputValues}
-        currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
-        validationResults={[]}
         generateButtonColors={() => { }}
       />
     );
@@ -53,18 +56,18 @@ describe('Keyboard', () => {
     fireEvent.click(zKey);
 
     expect(mockHandleInputChange).toHaveBeenCalledWith('nomZ', expect.anything());
-
-    currentRow = 3;
+    const newerRow = 3;
+    const altered2: GameState = {
+      ...mockGameState,
+      currentRow: newerRow
+    }
     rerender(
       <Keyboard
+        gameState={altered2}
+        updateGameState={mockUpdateGameState}
         updateKeyboardRef={() => { }}
-        length={length}
-        setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
-        inputValues={inputValues}
-        currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
-        validationResults={[]}
         generateButtonColors={() => { }}
       />
     );

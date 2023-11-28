@@ -15,17 +15,11 @@ import { ResetButton } from './components/resetButton';
 
 const App = () => {
   const {
-    inputValues,
-    setSelectedWord,
-    currentRow,
-    setCurrentRow,
+    gameState,
+    updateGameState,
     wordList,
     availableWords,
-    targetWord,
-    selectedWord,
     isLoading,
-    validationResults,
-    isWinner,
     updateKeyboardRef,
     generateButtonColors,
     resetGameAndCloseModal,
@@ -33,7 +27,7 @@ const App = () => {
     handleInputChange,
     handleKeyPress,
     isOpen,
-  } = useGameLogic()
+  } = useGameLogic();
 
   useKeyboardInput(handleKeyPress);
 
@@ -50,39 +44,31 @@ const App = () => {
       <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
       <Divider orientation='horizontal' />
       <WordBoard
-        length={targetWord.length}
-        inputValues={inputValues}
-        currentRow={currentRow}
+        gameState={gameState}
         handleInputChange={handleInputChange}
-        validationResults={validationResults}
       />
       <AnswerSpecifier
+        gameState={gameState}
+        updateGameState={updateGameState}
         wordList={wordList}
         availableWords={availableWords}
-        selectedWord={selectedWord}
-        setSelectedWord={setSelectedWord}
-        setCurrentRow={setCurrentRow}
         handleInputChange={handleInputChange}
         handleGuessSubmit={handleGuessSubmit}
       />
       <Keyboard
+        gameState={gameState}
+        updateGameState={updateGameState}
         updateKeyboardRef={updateKeyboardRef}
-        length={targetWord.length}
-        inputValues={inputValues}
-        currentRow={currentRow}
         handleInputChange={handleInputChange}
-        setCurrentRow={setCurrentRow}
         handleGuessSubmit={handleGuessSubmit}
         generateButtonColors={generateButtonColors}
-        validationResults={validationResults}
       />
       <Center mt={8}>
         <ResetButton resetGameAndCloseModal={resetGameAndCloseModal} />
       </Center>
       <FinishedModal
+        gameState={gameState}
         isOpen={isOpen}
-        isWinner={isWinner}
-        targetWord={targetWord}
         resetGame={resetGameAndCloseModal}
       />
     </Box>

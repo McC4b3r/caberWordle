@@ -1,14 +1,27 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { FinishedModal } from '.';
+import { GameState } from '../../types';
 
 describe('FinishedModal', () => {
+  const mockGameState: GameState = {
+    inputValues: ['put', 'row', 'nom', ''],
+    validationResults: [[]],
+    currentRow: 1,
+    targetWord: 'apple',
+    selectedWord: '',
+    isWinner: null,
+  };
+
   it('renders "Victory!" modal when isWinner is true', () => {
+    const winState: GameState = {
+      ...mockGameState,
+      isWinner: true,
+      targetWord: 'apple'
+    }
     render(
       <FinishedModal
-        isWinner={true}
+        gameState={winState}
         isOpen={true}
-        targetWord="apple"
         resetGame={() => { }}
       />
     );
@@ -18,11 +31,16 @@ describe('FinishedModal', () => {
   });
 
   it('renders "Game Over" modal when isWinner is false', () => {
+    const loseState: GameState = {
+      ...mockGameState,
+      isWinner: false,
+      targetWord: 'apple',
+    }
+
     render(
       <FinishedModal
-        isWinner={false}
+        gameState={loseState}
         isOpen={true}
-        targetWord="apple"
         resetGame={() => { }}
       />
     );
@@ -32,12 +50,17 @@ describe('FinishedModal', () => {
   });
 
   it('calls resetGame when "Play Again?" button is clicked', () => {
+    const winState: GameState = {
+      ...mockGameState,
+      isWinner: true,
+      targetWord: 'apple'
+    }
     const resetGameMock = jest.fn();
+
     render(
       <FinishedModal
-        isWinner={true}
+        gameState={winState}
         isOpen={true}
-        targetWord="apple"
         resetGame={resetGameMock}
       />
     );
@@ -49,9 +72,8 @@ describe('FinishedModal', () => {
   it('does not render the modal when isWinner is null', () => {
     render(
       <FinishedModal
-        isWinner={null}
+        gameState={mockGameState}
         isOpen={false}
-        targetWord="apple"
         resetGame={() => { }}
       />
     );

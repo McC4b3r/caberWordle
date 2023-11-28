@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { ValidationResult } from '../types';
 import { useDisclosure } from '@chakra-ui/react';
 import { validateGuess } from '../utils';
+import { MAX_ROWS } from '../constants';
 
 export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
   useEffect(() => {
@@ -22,17 +23,32 @@ export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
 };
 
 export const useGameLogic = () => {
-  const [inputValues, setInputValues] = useState(Array(6).fill(''));
-  const [currentRow, setCurrentRow] = useState(0);
+  const [gameState, setGameState] = useState({
+    inputValues: Array(MAX_ROWS).fill(''),
+    validationResults: [],
+    currentRow: 0,
+    targetWord: '',
+    selectedWord: '',
+    isWinner: null,
+  });
+  // const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
   const [wordList, setWordList] = useState<string[]>([]);
   const [availableWords, setAvailableWords] = useState<string[]>([]);
-  const [targetWord, setTargetWord] = useState('');
-  const [selectedWord, setSelectedWord] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
-  const [isWinner, setIsWinner] = useState<boolean | null>(null);
   const [keyboardRef, setKeyboardRef] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const updateGameState = (updates: any) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      ...updates,
+    }));
+  };
+
+  const setRandomWord = useCallback((wordArray: string[]) => {
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    updateGameState({ targetWord: wordArray[randomIndex] });
+  }, []);
 
   useEffect(() => {
     const getWords = async () => {
@@ -45,17 +61,19 @@ export const useGameLogic = () => {
     };
 
     getWords().catch(console.error);
-  }, []);
+  }, [setRandomWord]);
 
   useEffect(() => {
+    const { targetWord } = gameState;
     setAvailableWords(wordList.filter(word => word.length === targetWord.length));
-  }, [wordList, targetWord.length]);
+  }, [wordList, gameState]);
 
   useEffect(() => {
+    const { isWinner } = gameState;
     if (isWinner !== null) {
       onOpen();
     }
-  }, [isWinner, onOpen]);
+  }, [gameState, onOpen]);
 
   const updateKeyboardRef = (keyboard: any) => {
     setKeyboardRef(keyboard);
@@ -95,31 +113,30 @@ export const useGameLogic = () => {
     });
   };
 
-  const setRandomWord = (wordArray: string[]) => {
-    const randomIndex = Math.floor(Math.random() * wordArray.length);
-    setTargetWord(wordArray[randomIndex]);
-  };
-
-  const resetGameAndCloseModal = () => {
-    setInputValues(Array(6).fill(''));
-    setSelectedWord('');
-    removeButtonColors(keyboardRef, validationResults);
-    setValidationResults([]);
-    setRandomWord(wordList);
-    setAvailableWords(wordList.filter(word => word.length === targetWord.length));
-    setCurrentRow(0);
-    setIsWinner(null);
+  const resetGameAndCloseModal = async () => {
+    await updateGameState({
+      inputValues: Array(MAX_ROWS).fill(''),
+      selectedWord: '',
+      currentRow: 0,
+      isWinner: null,
+    });
+    await removeButtonColors(keyboardRef, gameState.validationResults);
+    await updateGameState({ validationResults: [] })
+    await setRandomWord(wordList);
+    const { targetWord } = gameState;
+    await setAvailableWords(wordList.filter(word => word.length === targetWord.length));
     onClose();
   };
 
   const handleGuessSubmit = (guess: string) => {
+    const { targetWord, currentRow, isWinner } = gameState;
     const results = validateGuess(guess, targetWord);
-    setValidationResults(prevResults => [...prevResults, results]);
+    updateGameState(results);
 
     if (guess === targetWord) {
-      setIsWinner(true);
+      updateGameState({ isWinner: true });
     } else if (currentRow === 5 && isWinner === null) {
-      setIsWinner(false);
+      updateGameState({ isWinner: false });
     }
 
     if (guess !== targetWord) {
@@ -128,16 +145,18 @@ export const useGameLogic = () => {
   };
 
   const handleInputChange = (value: string) => {
+    const { inputValues, currentRow } = gameState;
     const newValues = [...inputValues];
     newValues[currentRow] = value.toLowerCase();
-    setInputValues(newValues);
+    updateGameState({ inputValues: newValues });
   };
 
   const handleKeyPress = (key: string) => {
+    const { inputValues, currentRow, targetWord } = gameState
     const currentInput = inputValues[currentRow];
     if (key === 'Enter' && currentInput.length === targetWord.length) {
       handleGuessSubmit(currentInput);
-      setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+      updateGameState({ currentRow: currentRow < 5 ? currentRow + 1 : currentRow })
     } else if (key === 'Backspace' && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
     } else if (/^[a-zA-Z]$/.test(key) && currentInput.length < targetWord.length) {
@@ -146,18 +165,11 @@ export const useGameLogic = () => {
   };
 
   return {
-    inputValues,
-    setInputValues,
-    currentRow,
-    setCurrentRow,
-    setSelectedWord,
+    gameState,
+    updateGameState,
     wordList,
     availableWords,
-    targetWord,
-    selectedWord,
     isLoading,
-    validationResults,
-    isWinner,
     keyboardRef,
     updateKeyboardRef,
     generateButtonColors,

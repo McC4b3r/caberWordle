@@ -1,28 +1,22 @@
 import { VStack } from '@chakra-ui/react';
 import { Row } from '../row';
 import { BoardProps } from '../../types';
+import { MAX_ROWS } from '../../constants';
 
 export const WordBoard = ({
-  length,
-  inputValues,
+  gameState,
   handleInputChange,
-  validationResults,
-  currentRow,
 }: BoardProps) => {
-
-  const rows = Array.from({ length: 6 }, (_, index) => {
+  const rows = Array.from({ length: MAX_ROWS }, (_, index) => {
     return (
       <Row
+        gameState={gameState}
         key={index}
-        inputValues={inputValues}
         rowIndex={index}
-        length={length}
         handleInputChange={handleInputChange}
-        validationResults={validationResults}
       />
     )
-  }
-  );
+  });
 
   return (
     <VStack spacing={2} mt={8} data-testid="word-board">

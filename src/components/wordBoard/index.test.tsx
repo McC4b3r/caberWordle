@@ -1,24 +1,27 @@
 import { render, screen } from '@testing-library/react';
 import { WordBoard } from '.';
+import { MAX_ROWS } from '../../constants';
 
 describe('WordBoard', () => {
+  const mockGameState = {
+    inputValues: ['', '', '', '', '', ''],
+    validationResults: [[], [], [], [], [], []],
+    currentRow: 0,
+    targetWord: '',
+    selectedWord: '',
+    isWinner: null,
+  };
   const mockHandleInputChange = jest.fn();
-  const length = 5;
-  const inputValues = Array(6).fill('');
-  const validationResults = Array(6).fill([]);
 
   it('renders the correct number of Rows', () => {
     render(
       <WordBoard
-        length={length}
-        inputValues={inputValues}
+        gameState={mockGameState}
         handleInputChange={mockHandleInputChange}
-        validationResults={validationResults}
-        currentRow={0}
       />
     );
 
     const rows = screen.getAllByTestId('row');
-    expect(rows).toHaveLength(6);
+    expect(rows).toHaveLength(MAX_ROWS);
   });
 });
