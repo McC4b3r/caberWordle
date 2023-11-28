@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 
 export type BoardProps = {
-  length: number;
+  targetWordlength: number;
   inputValues: string[];
   currentRow: number;
   handleInputChange: (value: string) => void;
@@ -9,7 +9,7 @@ export type BoardProps = {
 }
 
 export type RowProps = {
-  length: number;
+  targetWordlength: number;
   inputValues: string[];
   rowIndex: number;
   handleInputChange: (word: string) => void;
@@ -18,7 +18,7 @@ export type RowProps = {
 
 export type KeyboardProps = {
   updateKeyboardRef: (keyboard: any) => void;
-  length: number;
+  targetWordLength: number;
   inputValues: string[];
   currentRow: number;
   handleInputChange: (value: string) => void;

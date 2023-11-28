@@ -3,7 +3,7 @@ import { Row } from '../row';
 import { BoardProps } from '../../types';
 
 export const WordBoard = ({
-  length,
+  targetWordlength,
   inputValues,
   handleInputChange,
   validationResults,
@@ -16,7 +16,7 @@ export const WordBoard = ({
         key={index}
         inputValues={inputValues}
         rowIndex={index}
-        length={length}
+        targetWordlength={targetWordlength}
         handleInputChange={handleInputChange}
         validationResults={validationResults}
       />

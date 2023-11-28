@@ -11,7 +11,7 @@ describe('WordBoard', () => {
   it('renders the correct number of Rows', () => {
     render(
       <WordBoard
-        length={length}
+        targetWordlength={length}
         inputValues={inputValues}
         handleInputChange={mockHandleInputChange}
         validationResults={validationResults}

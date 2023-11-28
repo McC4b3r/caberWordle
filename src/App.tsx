@@ -50,7 +50,7 @@ const App = () => {
       <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
       <Divider orientation='horizontal' />
       <WordBoard
-        length={targetWord.length}
+        targetWordlength={targetWord.length}
         inputValues={inputValues}
         currentRow={currentRow}
         handleInputChange={handleInputChange}
@@ -67,7 +67,7 @@ const App = () => {
       />
       <Keyboard
         updateKeyboardRef={updateKeyboardRef}
-        length={targetWord.length}
+        targetWordLength={targetWord.length}
         inputValues={inputValues}
         currentRow={currentRow}
         handleInputChange={handleInputChange}

@@ -14,7 +14,7 @@ describe('Keyboard', () => {
     render(
       <Keyboard
         updateKeyboardRef={() => { }}
-        length={length}
+        targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}
@@ -38,7 +38,7 @@ describe('Keyboard', () => {
     const { rerender } = render(
       <Keyboard
         updateKeyboardRef={() => { }}
-        length={length}
+        targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}
@@ -58,7 +58,7 @@ describe('Keyboard', () => {
     rerender(
       <Keyboard
         updateKeyboardRef={() => { }}
-        length={length}
+        targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}
         handleInputChange={mockHandleInputChange}
         inputValues={inputValues}

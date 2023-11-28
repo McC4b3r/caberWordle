@@ -5,7 +5,7 @@ import { getBackgroundColor } from '../../utils';
 export const Row = ({
   inputValues,
   rowIndex,
-  length,
+  targetWordlength,
   handleInputChange,
   validationResults,
 }: RowProps) => (
@@ -18,7 +18,7 @@ export const Row = ({
       value={inputValues[rowIndex]}
       onChange={(value) => handleInputChange(value)}
     >
-      {Array.from({ length }, (_, index) => {
+      {Array.from({ length: targetWordlength }, (_, index) => {
         const result = validationResults?.[rowIndex]?.[index];
         const backgroundColor = result ? getBackgroundColor(result) : 'transparent';
 

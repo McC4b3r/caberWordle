@@ -12,7 +12,7 @@ describe('Row', () => {
       <Row
         inputValues={Array(length).fill('')}
         rowIndex={0}
-        length={length}
+        targetWordlength={length}
         handleInputChange={mockHandleInputChange}
         validationResults={[]}
       />
@@ -38,7 +38,7 @@ describe('Row', () => {
       <Row
         inputValues={Array(length).fill('')}
         rowIndex={0}
-        length={length}
+        targetWordlength={length}
         handleInputChange={mockHandleInputChange}
         validationResults={validationResults}
       />
@@ -67,7 +67,7 @@ describe('Row', () => {
           availableWords={[]}
         />
         <Row
-          length={mockWord.length}
+          targetWordlength={mockWord.length}
           inputValues={inputValues}
           rowIndex={0}
           handleInputChange={() => { }}

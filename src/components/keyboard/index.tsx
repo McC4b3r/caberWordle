@@ -8,7 +8,7 @@ import './keycolors.css';
 
 export const Keyboard = ({
   updateKeyboardRef,
-  length,
+  targetWordLength,
   setCurrentRow,
   handleInputChange,
   inputValues,
@@ -25,7 +25,7 @@ export const Keyboard = ({
   }, [keyboard, updateButtonColors, inputValues, currentRow, validationResults]);
 
   const onKeyPress = (button: string) => {
-    if (button === "{enter}" && inputValues[currentRow].length === length) {
+    if (button === "{enter}" && inputValues[currentRow].length === targetWordLength) {
       handleGuessSubmit(inputValues[currentRow]);
       setCurrentRow(prevRow => {
         keyboard.current.setInput("");
@@ -50,7 +50,7 @@ export const Keyboard = ({
         layout={defaultLayout}
         onChange={handleInputChange}
         onKeyPress={onKeyPress}
-        maxLength={length}
+        maxLength={targetWordLength}
       />
     </Box>
   );
