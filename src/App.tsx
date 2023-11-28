@@ -27,7 +27,7 @@ const App = () => {
     validationResults,
     isWinner,
     updateKeyboardRef,
-    generateButtonColors,
+    updateButtonColors,
     resetGameAndCloseModal,
     handleGuessSubmit,
     handleInputChange,
@@ -73,7 +73,7 @@ const App = () => {
         handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
         handleGuessSubmit={handleGuessSubmit}
-        generateButtonColors={generateButtonColors}
+        updateButtonColors={updateButtonColors}
         validationResults={validationResults}
       />
       <Center mt={8}>

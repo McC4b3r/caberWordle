@@ -14,15 +14,15 @@ export const Keyboard = ({
   inputValues,
   currentRow,
   handleGuessSubmit,
-  generateButtonColors,
+  updateButtonColors,
   validationResults,
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
 
   useEffect(() => {
-    generateButtonColors(keyboard.current, validationResults);
+    updateButtonColors(keyboard.current, validationResults, true);
     keyboard.current.setInput(inputValues[currentRow]);
-  }, [keyboard, generateButtonColors, inputValues, currentRow, validationResults]);
+  }, [keyboard, updateButtonColors, inputValues, currentRow, validationResults]);
 
   const onKeyPress = (button: string) => {
     if (button === "{enter}" && inputValues[currentRow].length === length) {

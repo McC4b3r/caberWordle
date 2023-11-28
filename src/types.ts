@@ -24,7 +24,7 @@ export type KeyboardProps = {
   handleInputChange: (value: string) => void;
   handleGuessSubmit: (guess: string) => void;
   setCurrentRow: Dispatch<SetStateAction<number>>;
-  generateButtonColors: (keyboard: any, validationResults: ValidationResult[][]) => void;
+  updateButtonColors: (keyboard: any, validationResults: ValidationResult[][], addColors: boolean) => void;
   validationResults: ValidationResult[][];
 };
 

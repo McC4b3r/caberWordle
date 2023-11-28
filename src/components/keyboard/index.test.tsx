@@ -21,7 +21,7 @@ describe('Keyboard', () => {
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         validationResults={[]}
-        generateButtonColors={() => { }}
+        updateButtonColors={() => { }}
       />
     );
 
@@ -45,7 +45,7 @@ describe('Keyboard', () => {
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         validationResults={[]}
-        generateButtonColors={() => { }}
+        updateButtonColors={() => { }}
       />
     );
 
@@ -65,7 +65,7 @@ describe('Keyboard', () => {
         currentRow={currentRow}
         handleGuessSubmit={mockHandleGuessSubmit}
         validationResults={[]}
-        generateButtonColors={() => { }}
+        updateButtonColors={() => { }}
       />
     );
 

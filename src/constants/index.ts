@@ -1,0 +1,1 @@
+export const GUESS_ATTEMPTS = 6;

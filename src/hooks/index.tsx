@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ValidationResult } from '../types';
 import { useDisclosure } from '@chakra-ui/react';
 import { validateGuess } from '../utils';
+import { GUESS_ATTEMPTS } from '../constants';
 
 export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
   useEffect(() => {
@@ -22,7 +23,7 @@ export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
 };
 
 export const useGameLogic = () => {
-  const [inputValues, setInputValues] = useState(Array(6).fill(''));
+  const [inputValues, setInputValues] = useState(Array(GUESS_ATTEMPTS).fill(''));
   const [currentRow, setCurrentRow] = useState(0);
   const [wordList, setWordList] = useState<string[]>([]);
   const [availableWords, setAvailableWords] = useState<string[]>([]);
@@ -61,36 +62,21 @@ export const useGameLogic = () => {
     setKeyboardRef(keyboard);
   };
 
-  const generateButtonColors = (
+  const updateButtonColors = (
     keyboard: any,
-    validationResults: ValidationResult[][]
+    validationResults: ValidationResult[][],
+    addColors: boolean
   ) => {
-    validationResults.forEach((rowResults, rowIndex) => {
-      rowResults.forEach((result, index) => {
+    validationResults.forEach((rowResults) => {
+      rowResults.forEach((result) => {
         const className =
           result.status === "correct"
             ? "green-key"
             : result.status === "present"
               ? "yellow-key"
               : "grey-key";
-        keyboard.addButtonTheme(result.letter.toUpperCase(), className);
-      });
-    });
-  };
-
-  const removeButtonColors = (
-    keyboardRef: any,
-    validationResults: ValidationResult[][]
-  ) => {
-    validationResults.forEach((rowResults) => {
-      rowResults.forEach((result) => {
-        const classNameToRemove =
-          result.status === "correct"
-            ? "green-key"
-            : result.status === "present"
-              ? "yellow-key"
-              : "grey-key";
-        keyboardRef.removeButtonTheme(result.letter.toUpperCase(), classNameToRemove);
+        const action = addColors ? "addButtonTheme" : "removeButtonTheme";
+        keyboard[action](result.letter.toUpperCase(), className);
       });
     });
   };
@@ -101,9 +87,9 @@ export const useGameLogic = () => {
   };
 
   const resetGameAndCloseModal = () => {
-    setInputValues(Array(6).fill(''));
+    setInputValues(Array(GUESS_ATTEMPTS).fill(''));
     setSelectedWord('');
-    removeButtonColors(keyboardRef, validationResults);
+    updateButtonColors(keyboardRef, validationResults, false);
     setValidationResults([]);
     setRandomWord(wordList);
     setAvailableWords(wordList.filter(word => word.length === targetWord.length));
@@ -160,8 +146,7 @@ export const useGameLogic = () => {
     isWinner,
     keyboardRef,
     updateKeyboardRef,
-    generateButtonColors,
-    removeButtonColors,
+    updateButtonColors,
     setRandomWord,
     resetGameAndCloseModal,
     handleGuessSubmit,
