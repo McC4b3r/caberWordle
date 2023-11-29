@@ -4,6 +4,7 @@ import { useDisclosure, useToast } from '@chakra-ui/react';
 import { validateGuess } from '../utils';
 import { GUESS_ATTEMPTS } from '../constants';
 
+// hook that handles the user's physical keyboard interactions
 export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -22,6 +23,7 @@ export const useKeyboardInput = (handleKeyPress: (key: string) => void) => {
   }, [handleKeyPress]);
 };
 
+// hook to manage all app level state and logic of the game
 export const useGameLogic = () => {
   const [inputValues, setInputValues] = useState(Array(GUESS_ATTEMPTS).fill(''));
   const [currentRow, setCurrentRow] = useState(0);
@@ -37,6 +39,7 @@ export const useGameLogic = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
+  // data fetching for the wordlist.txt
   useEffect(() => {
     const getWords = async () => {
       const res = await fetch('/wordlist.txt');
@@ -50,20 +53,26 @@ export const useGameLogic = () => {
     getWords().catch(console.error);
   }, []);
 
+  // for ensuring answerValidator only allows entry of words that will fit in the word board
   useEffect(() => {
     setAvailableWords(wordList.filter(word => word.length === targetWord.length));
   }, [wordList, targetWord.length]);
 
+  // for handling the endgame and thet modal that opens up at the end of the game
   useEffect(() => {
     if (isWinner !== null) {
       onOpen();
     }
   }, [isWinner, onOpen]);
 
+  // App level state that allows the updateButtonColors hook to live here
   const updateKeyboardRef = (keyboard: any) => {
     setKeyboardRef(keyboard);
   };
 
+  // updates the background colors of the virtual-keyboard buttons for stretch feature
+  // https://hodgef.com/simple-keyboard/documentation/methods/addbuttontheme/
+  // https://hodgef.com/simple-keyboard/documentation/methods/removebuttontheme/
   const updateButtonColors = (
     keyboard: any,
     validationResults: ValidationResult[][],
@@ -71,23 +80,32 @@ export const useGameLogic = () => {
   ) => {
     validationResults.forEach((rowResults) => {
       rowResults.forEach((result) => {
-        const className =
-          result.status === "correct"
-            ? "green-key"
-            : result.status === "present"
-              ? "yellow-key"
-              : "grey-key";
+        const { status, letter } = result;
+        let className = "";
+        switch (status) {
+          case "correct":
+            className = "green-key";
+            break;
+          case "present":
+            className = "yellow-key";
+            break;
+          default:
+            className = "grey-key";
+        }
         const action = addColors ? "addButtonTheme" : "removeButtonTheme";
-        keyboard[action](result.letter.toUpperCase(), className);
+        const key = letter.toUpperCase();
+        keyboard[action](key, className);
       });
     });
   };
 
+  // responsible for setting a random word from the word list
   const setRandomWord = (wordArray: string[]) => {
     const randomIndex = Math.floor(Math.random() * wordArray.length);
     setTargetWord(wordArray[randomIndex]);
   };
 
+  // sets the game state back to normal and closes endgame modal if it's open
   const resetGameAndCloseModal = () => {
     setInputValues(Array(GUESS_ATTEMPTS).fill(''));
     setSelectedWord('');
@@ -100,6 +118,7 @@ export const useGameLogic = () => {
     onClose();
   };
 
+  // used by the physical keyboard, virtual keyboard, and answerSpecifier for guess submission
   const handleGuessSubmit = (guess: string) => {
     const results = validateGuess(guess, targetWord);
     setValidationResults(prevResults => [...prevResults, results]);
@@ -115,12 +134,14 @@ export const useGameLogic = () => {
     }
   };
 
+  // for row component
   const handleInputChange = (value: string) => {
     const newValues = [...inputValues];
     newValues[currentRow] = value.toLowerCase();
     setInputValues(newValues);
   };
 
+  // logic used when hard mode is active
   const containsAllValidLetters = (inputValue: string) => {
     const allValid = validationResults.flat()
       .filter(entry => entry.status !== 'wrong')
@@ -133,7 +154,7 @@ export const useGameLogic = () => {
     return requiredLetters.every(letter => inputValue.includes(letter));
   };
 
-
+  // handler function passed to the hook that manages physical keyboard interactions
   const handleKeyPress = (key: string) => {
     const currentInput = inputValues[currentRow];
     if (key === 'Enter' && currentInput.length === targetWord.length) {
@@ -143,7 +164,7 @@ export const useGameLogic = () => {
       } else if (isHardMode && !containsAllValidLetters(currentInput)) {
         toast({
           title: 'Invalid Submission',
-          description: 'Your submission does not contain all required letters.',
+          description: 'Your submission does not contain previously confirmed letters.',
           status: 'error',
           duration: 3000,
           isClosable: true,

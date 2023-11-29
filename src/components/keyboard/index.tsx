@@ -27,21 +27,24 @@ export const Keyboard = ({
     keyboard.current.setInput(inputValues[currentRow]);
   }, [keyboard, updateButtonColors, inputValues, currentRow, validationResults]);
 
+  // handles all virtual key press scenarios
   const onKeyPress = (button: string) => {
     const currentInput = inputValues[currentRow];
-    if (button === "{enter}" && inputValues[currentRow].length === targetWordLength) {
-      if (!isHardMode || containsAllValidLetters(currentInput)) {
-        handleGuessSubmit(currentInput);
-        setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
-      } else if (isHardMode && !containsAllValidLetters(currentInput)) {
-        toast({
-          title: 'Invalid Submission',
-          description: 'Your submission does not contain all required letters.',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
+    if (button !== "{enter}" || currentInput.length !== targetWordLength) {
+      return;
+    }
+
+    if (!isHardMode || containsAllValidLetters(currentInput)) {
+      handleGuessSubmit(currentInput);
+      setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+    } else if (isHardMode && !containsAllValidLetters(currentInput)) {
+      toast({
+        title: 'Invalid Submission',
+        description: 'Your submission does not contain previously confirmed letters.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

@@ -20,6 +20,7 @@ export const HardModeToggle = ({
         {hardModeText}
       </Heading>
       <Switch
+        data-testid="hard-mode"
         ml={2}
         colorScheme="red"
         onChange={handleToggle} />

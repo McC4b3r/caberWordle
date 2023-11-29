@@ -40,7 +40,6 @@ const App = () => {
   } = useGameLogic()
 
   useKeyboardInput(handleKeyPress);
-  // console.log(validationResults)
 
   if (isLoading) {
     return (

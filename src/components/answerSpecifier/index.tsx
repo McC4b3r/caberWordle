@@ -39,7 +39,7 @@ export const AnswerSpecifier = ({
     } else if (isHardMode && !containsAllValidLetters(selectedWord)) {
       toast({
         title: 'Invalid Submission',
-        description: 'Your submission does not contain all required letters.',
+        description: 'Your submission does not contain previously confirmed letters.',
         status: 'error',
         duration: 3000,
         isClosable: true,
