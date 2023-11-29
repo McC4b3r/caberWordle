@@ -19,7 +19,7 @@ export const Row = ({
       onChange={(value) => handleInputChange(value)}
     >
       {Array.from({ length: targetWordlength }, (_, index) => {
-        const result = validationResults?.[rowIndex]?.[index];
+        const result = validationResults[rowIndex]?.[index];
         const backgroundColor = result ? getBackgroundColor(result) : 'transparent';
 
         return (

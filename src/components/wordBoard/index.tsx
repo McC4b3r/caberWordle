@@ -1,16 +1,16 @@
 import { Container, VStack } from '@chakra-ui/react';
 import { Row } from '../row';
 import { BoardProps } from '../../types';
+import { GUESS_ATTEMPTS } from '../../constants';
 
 export const WordBoard = ({
-  targetWordlength,
   inputValues,
+  targetWordlength,
   handleInputChange,
   validationResults,
-  currentRow,
 }: BoardProps) => {
 
-  const rows = Array.from({ length: 6 }, (_, index) => {
+  const rows = Array.from({ length: GUESS_ATTEMPTS }, (_, index) => {
     return (
       <Row
         key={index}

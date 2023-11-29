@@ -10,8 +10,8 @@ import {
 import { FinishedmodalProps } from '../../types';
 
 export const FinishedModal = ({
-  isWinner,
   isOpen,
+  isWinner,
   targetWord,
   resetGame,
 }: FinishedmodalProps) => {

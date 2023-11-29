@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from "react"
 export type BoardProps = {
   targetWordlength: number;
   inputValues: string[];
-  currentRow: number;
   handleInputChange: (value: string) => void;
   validationResults: ValidationResult[][];
 }

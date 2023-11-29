@@ -7,12 +7,12 @@ import { KeyboardProps } from "../../types";
 import './keycolors.css';
 
 export const Keyboard = ({
-  updateKeyboardRef,
-  targetWordLength,
-  setCurrentRow,
-  handleInputChange,
   inputValues,
   currentRow,
+  setCurrentRow,
+  updateKeyboardRef,
+  targetWordLength,
+  handleInputChange,
   handleGuessSubmit,
   updateButtonColors,
   validationResults,
@@ -47,6 +47,8 @@ export const Keyboard = ({
       });
     }
   };
+
+  // react-simple-keyboard docs: https://hodgef.com/simple-keyboard/getting-started/react/
 
   return (
     <Box

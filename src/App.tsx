@@ -17,25 +17,25 @@ import { HardModeToggle } from './components/hardModeToggle';
 const App = () => {
   const {
     inputValues,
-    setSelectedWord,
     currentRow,
     setCurrentRow,
     wordList,
     availableWords,
     targetWord,
     selectedWord,
-    isLoading,
+    setSelectedWord,
     validationResults,
+    isLoading,
     isWinner,
+    isOpen,
+    isHardMode,
+    setIsHardMode,
     updateKeyboardRef,
     updateButtonColors,
     resetGameAndCloseModal,
     handleGuessSubmit,
     handleInputChange,
     handleKeyPress,
-    isOpen,
-    isHardMode,
-    setIsHardMode,
     containsAllValidLetters,
   } = useGameLogic()
 
@@ -55,9 +55,8 @@ const App = () => {
       <Divider orientation='horizontal' />
       <HardModeToggle isHardMode={isHardMode} setIsHardMode={setIsHardMode} />
       <WordBoard
-        targetWordlength={targetWord.length}
         inputValues={inputValues}
-        currentRow={currentRow}
+        targetWordlength={targetWord.length}
         handleInputChange={handleInputChange}
         validationResults={validationResults}
       />
@@ -73,12 +72,12 @@ const App = () => {
         containsAllValidLetters={containsAllValidLetters}
       />
       <Keyboard
-        updateKeyboardRef={updateKeyboardRef}
-        targetWordLength={targetWord.length}
         inputValues={inputValues}
         currentRow={currentRow}
-        handleInputChange={handleInputChange}
         setCurrentRow={setCurrentRow}
+        updateKeyboardRef={updateKeyboardRef}
+        targetWordLength={targetWord.length}
+        handleInputChange={handleInputChange}
         handleGuessSubmit={handleGuessSubmit}
         updateButtonColors={updateButtonColors}
         validationResults={validationResults}

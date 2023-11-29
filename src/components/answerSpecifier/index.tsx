@@ -16,13 +16,14 @@ export const AnswerSpecifier = ({
   selectedWord,
   setSelectedWord,
   setCurrentRow,
-  handleGuessSubmit,
   handleInputChange,
+  handleGuessSubmit,
   isHardMode,
   containsAllValidLetters,
 }: AnswerSpecifierProps) => {
   const toast = useToast();
 
+  // line number of word from wordlist.txt
   const wordNum = (word: string) => wordList.indexOf(word) + 1;
   const isDisabled = selectedWord.length === 0;
 

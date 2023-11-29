@@ -15,7 +15,6 @@ describe('WordBoard', () => {
         inputValues={inputValues}
         handleInputChange={mockHandleInputChange}
         validationResults={validationResults}
-        currentRow={0}
       />
     );
 
