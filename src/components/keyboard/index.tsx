@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import KeyboardReact from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
-import { Box } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { KeyboardProps } from "../../types";
 import './keycolors.css';
 
@@ -16,8 +16,11 @@ export const Keyboard = ({
   handleGuessSubmit,
   updateButtonColors,
   validationResults,
+  isHardMode,
+  containsAllValidLetters,
 }: KeyboardProps) => {
   const keyboard = useRef<any>();
+  const toast = useToast();
 
   useEffect(() => {
     updateButtonColors(keyboard.current, validationResults, true);
@@ -25,12 +28,20 @@ export const Keyboard = ({
   }, [keyboard, updateButtonColors, inputValues, currentRow, validationResults]);
 
   const onKeyPress = (button: string) => {
+    const currentInput = inputValues[currentRow];
     if (button === "{enter}" && inputValues[currentRow].length === targetWordLength) {
-      handleGuessSubmit(inputValues[currentRow]);
-      setCurrentRow(prevRow => {
-        keyboard.current.setInput("");
-        return prevRow < 5 ? prevRow + 1 : prevRow;
-      });
+      if (!isHardMode || containsAllValidLetters(currentInput)) {
+        handleGuessSubmit(currentInput);
+        setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+      } else if (isHardMode && !containsAllValidLetters(currentInput)) {
+        toast({
+          title: 'Invalid Submission',
+          description: 'Your submission does not contain all required letters.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   };
 

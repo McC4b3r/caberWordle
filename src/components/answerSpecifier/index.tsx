@@ -6,6 +6,7 @@ import {
   Select,
   Flex,
   Button,
+  useToast,
 } from '@chakra-ui/react';
 import { AnswerSpecifierProps } from '../../types';
 
@@ -17,7 +18,10 @@ export const AnswerSpecifier = ({
   setCurrentRow,
   handleGuessSubmit,
   handleInputChange,
+  isHardMode,
+  containsAllValidLetters,
 }: AnswerSpecifierProps) => {
+  const toast = useToast();
 
   const wordNum = (word: string) => wordList.indexOf(word) + 1;
   const isDisabled = selectedWord.length === 0;
@@ -27,10 +31,20 @@ export const AnswerSpecifier = ({
   };
 
   const handleSubmit = () => {
-    handleInputChange(selectedWord);
-    handleGuessSubmit(selectedWord);
-    setSelectedWord('');
-    setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+    if (!isHardMode || containsAllValidLetters(selectedWord)) {
+      handleInputChange(selectedWord);
+      handleGuessSubmit(selectedWord);
+      setSelectedWord('');
+      setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+    } else if (isHardMode && !containsAllValidLetters(selectedWord)) {
+      toast({
+        title: 'Invalid Submission',
+        description: 'Your submission does not contain all required letters.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

@@ -5,6 +5,7 @@ describe('Keyboard', () => {
   const mockSetCurrentRow = jest.fn();
   const mockHandleInputChange = jest.fn();
   const mockHandleGuessSubmit = jest.fn();
+  const mockContainsAllValidLetters = jest.fn();
   const length = 5;
 
   it('applies virtual keyboard input to the correct index of inputValues when a key is clicked', () => {
@@ -13,6 +14,8 @@ describe('Keyboard', () => {
 
     render(
       <Keyboard
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         updateKeyboardRef={() => { }}
         targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}
@@ -37,6 +40,8 @@ describe('Keyboard', () => {
 
     const { rerender } = render(
       <Keyboard
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         updateKeyboardRef={() => { }}
         targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}
@@ -57,6 +62,8 @@ describe('Keyboard', () => {
     currentRow = 3;
     rerender(
       <Keyboard
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         updateKeyboardRef={() => { }}
         targetWordLength={length}
         setCurrentRow={mockSetCurrentRow}

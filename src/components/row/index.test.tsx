@@ -5,6 +5,7 @@ import { ValidationResult } from '../../types';
 
 describe('Row', () => {
   const mockHandleInputChange = jest.fn();
+  const mockContainsAllValidLetters = jest.fn();
 
   it('renders the correct number of PinInputFields', () => {
     const length = 5;
@@ -58,6 +59,8 @@ describe('Row', () => {
     render(
       <div>
         <AnswerSpecifier
+          isHardMode={false}
+          containsAllValidLetters={mockContainsAllValidLetters}
           wordList={[]}
           selectedWord={mockWord}
           setSelectedWord={() => { }}

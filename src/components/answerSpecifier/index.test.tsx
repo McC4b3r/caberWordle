@@ -6,12 +6,15 @@ describe('AnswerSpecifier', () => {
   const mockSetCurrentRow = jest.fn();
   const mockHandleGuessSubmit = jest.fn();
   const mockHandleInputChange = jest.fn();
+  const mockContainsAllValidLetters = jest.fn();
   const wordList = ['apple', 'banana', 'cherry'];
   const availableWords = ['banana', 'cherry'];
 
   it('displays the correct select options with line numbers based on wordList', () => {
     render(
       <AnswerSpecifier
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         wordList={wordList}
         availableWords={availableWords}
         selectedWord=''
@@ -33,6 +36,8 @@ describe('AnswerSpecifier', () => {
 
     render(
       <AnswerSpecifier
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         wordList={wordList}
         availableWords={availableWords}
         selectedWord={selectedWord}
@@ -53,6 +58,8 @@ describe('AnswerSpecifier', () => {
   it('disables the Guess button when no word is selected', () => {
     render(
       <AnswerSpecifier
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         wordList={wordList}
         availableWords={availableWords}
         selectedWord=''
@@ -69,6 +76,8 @@ describe('AnswerSpecifier', () => {
   it('enables the Guess button when a word is selected', () => {
     render(
       <AnswerSpecifier
+        isHardMode={false}
+        containsAllValidLetters={mockContainsAllValidLetters}
         wordList={wordList}
         availableWords={availableWords}
         selectedWord='banana'

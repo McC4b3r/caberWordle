@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { Container, VStack } from '@chakra-ui/react';
 import { Row } from '../row';
 import { BoardProps } from '../../types';
 
@@ -25,8 +25,10 @@ export const WordBoard = ({
   );
 
   return (
-    <VStack spacing={2} mt={8} data-testid="word-board">
-      {rows}
-    </VStack>
+    <Container>
+      <VStack spacing={2} mt={4} data-testid="word-board">
+        {rows}
+      </VStack>
+    </Container>
   );
 }

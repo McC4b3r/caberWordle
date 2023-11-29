@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ValidationResult } from '../types';
-import { useDisclosure } from '@chakra-ui/react';
+import { useDisclosure, useToast } from '@chakra-ui/react';
 import { validateGuess } from '../utils';
 import { GUESS_ATTEMPTS } from '../constants';
 
@@ -33,7 +33,9 @@ export const useGameLogic = () => {
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
   const [isWinner, setIsWinner] = useState<boolean | null>(null);
   const [keyboardRef, setKeyboardRef] = useState();
+  const [isHardMode, setIsHardMode] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     const getWords = async () => {
@@ -119,11 +121,34 @@ export const useGameLogic = () => {
     setInputValues(newValues);
   };
 
+  const containsAllValidLetters = (inputValue: string) => {
+    const allValid = validationResults.flat()
+      .filter(entry => entry.status !== 'wrong')
+      .map(entry => entry.letter);
+    const requiredLetters = [...new Set(allValid)];
+    if (validationResults.length === 0 || requiredLetters.length === 0) {
+      return true;
+    }
+
+    return requiredLetters.every(letter => inputValue.includes(letter));
+  };
+
+
   const handleKeyPress = (key: string) => {
     const currentInput = inputValues[currentRow];
     if (key === 'Enter' && currentInput.length === targetWord.length) {
-      handleGuessSubmit(currentInput);
-      setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+      if (!isHardMode || containsAllValidLetters(currentInput)) {
+        handleGuessSubmit(currentInput);
+        setCurrentRow(prevRow => prevRow < 5 ? prevRow + 1 : prevRow);
+      } else if (isHardMode && !containsAllValidLetters(currentInput)) {
+        toast({
+          title: 'Invalid Submission',
+          description: 'Your submission does not contain all required letters.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } else if (key === 'Backspace' && currentInput.length > 0) {
       handleInputChange(currentInput.slice(0, -1));
     } else if (/^[a-zA-Z]$/.test(key) && currentInput.length < targetWord.length) {
@@ -152,7 +177,10 @@ export const useGameLogic = () => {
     handleGuessSubmit,
     handleInputChange,
     handleKeyPress,
+    isHardMode,
+    setIsHardMode,
     isOpen,
+    containsAllValidLetters,
   };
 };
 

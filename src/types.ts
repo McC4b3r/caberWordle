@@ -26,6 +26,8 @@ export type KeyboardProps = {
   setCurrentRow: Dispatch<SetStateAction<number>>;
   updateButtonColors: (keyboard: any, validationResults: ValidationResult[][], addColors: boolean) => void;
   validationResults: ValidationResult[][];
+  containsAllValidLetters: (input: string) => boolean;
+  isHardMode: boolean;
 };
 
 export type ValidationResult = {
@@ -41,6 +43,8 @@ export type AnswerSpecifierProps = {
   setCurrentRow: Dispatch<SetStateAction<number>>;
   handleGuessSubmit: (guess: string) => void;
   availableWords: string[];
+  isHardMode: boolean;
+  containsAllValidLetters: (input: string) => boolean;
 }
 
 export type FinishedmodalProps = {
@@ -52,4 +56,9 @@ export type FinishedmodalProps = {
 
 export type ResetButtonProps = {
   resetGameAndCloseModal: () => void;
+}
+
+export type HardModeToggleProps = {
+  isHardMode: boolean;
+  setIsHardMode: Dispatch<SetStateAction<boolean>>;
 }

@@ -12,6 +12,7 @@ import { AnswerSpecifier } from './components/answerSpecifier';
 import { FinishedModal } from './components/finishedModal';
 import { useKeyboardInput, useGameLogic } from './hooks';
 import { ResetButton } from './components/resetButton';
+import { HardModeToggle } from './components/hardModeToggle';
 
 const App = () => {
   const {
@@ -33,9 +34,13 @@ const App = () => {
     handleInputChange,
     handleKeyPress,
     isOpen,
+    isHardMode,
+    setIsHardMode,
+    containsAllValidLetters,
   } = useGameLogic()
 
   useKeyboardInput(handleKeyPress);
+  // console.log(validationResults)
 
   if (isLoading) {
     return (
@@ -49,6 +54,7 @@ const App = () => {
     <Box>
       <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
       <Divider orientation='horizontal' />
+      <HardModeToggle isHardMode={isHardMode} setIsHardMode={setIsHardMode} />
       <WordBoard
         targetWordlength={targetWord.length}
         inputValues={inputValues}
@@ -64,6 +70,8 @@ const App = () => {
         setCurrentRow={setCurrentRow}
         handleInputChange={handleInputChange}
         handleGuessSubmit={handleGuessSubmit}
+        isHardMode={isHardMode}
+        containsAllValidLetters={containsAllValidLetters}
       />
       <Keyboard
         updateKeyboardRef={updateKeyboardRef}
@@ -75,6 +83,8 @@ const App = () => {
         handleGuessSubmit={handleGuessSubmit}
         updateButtonColors={updateButtonColors}
         validationResults={validationResults}
+        isHardMode={isHardMode}
+        containsAllValidLetters={containsAllValidLetters}
       />
       <Center mt={8}>
         <ResetButton resetGameAndCloseModal={resetGameAndCloseModal} />
