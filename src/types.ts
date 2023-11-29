@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction } from "react"
 export type HardModeToggleProps = {
   isHardMode: boolean;
   setIsHardMode: Dispatch<SetStateAction<boolean>>;
+  resetGameAndCloseModal: () => void;
+
 }
 
 export type BoardProps = {

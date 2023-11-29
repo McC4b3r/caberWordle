@@ -8,11 +8,13 @@ import { HardModeToggleProps } from "../../types";
 export const HardModeToggle = ({
   isHardMode,
   setIsHardMode,
+  resetGameAndCloseModal
 }: HardModeToggleProps) => {
   const hardModeText = 'Hard Mode: '
 
   const handleToggle = () => {
     setIsHardMode(!isHardMode);
+    resetGameAndCloseModal();
   }
   return (
     <Flex mt={3} ml={8}>

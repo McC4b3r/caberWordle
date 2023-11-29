@@ -53,7 +53,11 @@ const App = () => {
     <Box>
       <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
       <Divider orientation='horizontal' />
-      <HardModeToggle isHardMode={isHardMode} setIsHardMode={setIsHardMode} />
+      <HardModeToggle
+        isHardMode={isHardMode}
+        setIsHardMode={setIsHardMode}
+        resetGameAndCloseModal={resetGameAndCloseModal}
+      />
       <WordBoard
         inputValues={inputValues}
         targetWordlength={targetWord.length}
