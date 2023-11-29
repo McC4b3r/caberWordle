@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
+import { KeyboardReactInterface } from "react-simple-keyboard";
 
 export type HardModeToggleProps = {
   isHardMode: boolean;
@@ -38,11 +39,11 @@ export type KeyboardProps = {
   inputValues: string[];
   currentRow: number;
   setCurrentRow: Dispatch<SetStateAction<number>>;
-  updateKeyboardRef: (keyboard: any) => void;
+  updateKeyboardRef: (keyboard: KeyboardReactInterface) => void;
   targetWordLength: number;
   handleInputChange: (value: string) => void;
   handleGuessSubmit: (guess: string) => void;
-  updateButtonColors: (keyboard: any, validationResults: ValidationResult[][], addColors: boolean) => void;
+  updateButtonColors: (keyboard: KeyboardReactInterface, validationResults: ValidationResult[][], addColors: boolean) => void;
   validationResults: ValidationResult[][];
   isHardMode: boolean;
   containsAllValidLetters: (input: string) => boolean;

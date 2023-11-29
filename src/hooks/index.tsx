@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { KeyboardReactInterface } from 'react-simple-keyboard';
 import { ValidationResult } from '../types';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import { validateGuess } from '../utils';
@@ -34,7 +35,7 @@ export const useGameLogic = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [validationResults, setValidationResults] = useState<ValidationResult[][]>([]);
   const [isWinner, setIsWinner] = useState<boolean | null>(null);
-  const [keyboardRef, setKeyboardRef] = useState();
+  const [keyboardRef, setKeyboardRef] = useState<KeyboardReactInterface | undefined>();
   const [isHardMode, setIsHardMode] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -66,7 +67,7 @@ export const useGameLogic = () => {
   }, [isWinner, onOpen]);
 
   // App level state that allows the updateButtonColors hook to live here
-  const updateKeyboardRef = (keyboard: any) => {
+  const updateKeyboardRef = (keyboard: KeyboardReactInterface) => {
     setKeyboardRef(keyboard);
   };
 
@@ -74,10 +75,12 @@ export const useGameLogic = () => {
   // https://hodgef.com/simple-keyboard/documentation/methods/addbuttontheme/
   // https://hodgef.com/simple-keyboard/documentation/methods/removebuttontheme/
   const updateButtonColors = (
-    keyboard: any,
+    keyboard: KeyboardReactInterface | undefined,
     validationResults: ValidationResult[][],
     addColors: boolean
   ) => {
+    if (!keyboard) return;
+
     validationResults.forEach((rowResults) => {
       rowResults.forEach((result) => {
         const { status, letter } = result;

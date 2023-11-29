@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import KeyboardReact from "react-simple-keyboard";
+import KeyboardReact, { KeyboardReactInterface } from "react-simple-keyboard";
 import { defaultLayout } from "./layout";
 import "react-simple-keyboard/build/css/index.css";
 import { Box, useToast } from "@chakra-ui/react";
@@ -19,13 +19,21 @@ export const Keyboard = ({
   isHardMode,
   containsAllValidLetters,
 }: KeyboardProps) => {
-  const keyboard = useRef<any>();
+  const keyboard = useRef<KeyboardReactInterface>();
   const toast = useToast();
 
-  useEffect(() => {
-    updateButtonColors(keyboard.current, validationResults, true);
-    keyboard.current.setInput(inputValues[currentRow]);
-  }, [keyboard, updateButtonColors, inputValues, currentRow, validationResults]);
+  useEffect(() => keyboard.current && (
+    updateButtonColors(keyboard.current, validationResults, true),
+    keyboard.current.setInput(inputValues[currentRow])
+  ), [
+    keyboard,
+    updateButtonColors,
+    inputValues,
+    currentRow,
+    validationResults,
+  ]
+  );
+
 
   // handles all virtual key press scenarios
   const onKeyPress = (button: string) => {
