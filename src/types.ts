@@ -1,37 +1,23 @@
 import { Dispatch, SetStateAction } from "react"
 
+export type HardModeToggleProps = {
+  isHardMode: boolean;
+  setIsHardMode: Dispatch<SetStateAction<boolean>>;
+}
+
 export type BoardProps = {
-  targetWordlength: number;
   inputValues: string[];
+  targetWordlength: number;
   handleInputChange: (value: string) => void;
   validationResults: ValidationResult[][];
 }
 
 export type RowProps = {
-  targetWordlength: number;
   inputValues: string[];
   rowIndex: number;
+  targetWordlength: number;
   handleInputChange: (word: string) => void;
   validationResults: ValidationResult[][];
-};
-
-export type KeyboardProps = {
-  updateKeyboardRef: (keyboard: any) => void;
-  targetWordLength: number;
-  inputValues: string[];
-  currentRow: number;
-  handleInputChange: (value: string) => void;
-  handleGuessSubmit: (guess: string) => void;
-  setCurrentRow: Dispatch<SetStateAction<number>>;
-  updateButtonColors: (keyboard: any, validationResults: ValidationResult[][], addColors: boolean) => void;
-  validationResults: ValidationResult[][];
-  containsAllValidLetters: (input: string) => boolean;
-  isHardMode: boolean;
-};
-
-export type ValidationResult = {
-  letter: string;
-  status: 'correct' | 'present' | 'wrong';
 };
 
 export type AnswerSpecifierProps = {
@@ -46,18 +32,33 @@ export type AnswerSpecifierProps = {
   containsAllValidLetters: (input: string) => boolean;
 }
 
+export type KeyboardProps = {
+  inputValues: string[];
+  currentRow: number;
+  setCurrentRow: Dispatch<SetStateAction<number>>;
+  updateKeyboardRef: (keyboard: any) => void;
+  targetWordLength: number;
+  handleInputChange: (value: string) => void;
+  handleGuessSubmit: (guess: string) => void;
+  updateButtonColors: (keyboard: any, validationResults: ValidationResult[][], addColors: boolean) => void;
+  validationResults: ValidationResult[][];
+  isHardMode: boolean;
+  containsAllValidLetters: (input: string) => boolean;
+};
+
+export type ValidationResult = {
+  letter: string;
+  status: 'correct' | 'present' | 'wrong';
+};
+
+
 export type FinishedmodalProps = {
-  isWinner: boolean | null;
   isOpen: boolean;
+  isWinner: boolean | null;
   targetWord: string;
   resetGame: () => void;
 }
 
 export type ResetButtonProps = {
   resetGameAndCloseModal: () => void;
-}
-
-export type HardModeToggleProps = {
-  isHardMode: boolean;
-  setIsHardMode: Dispatch<SetStateAction<boolean>>;
 }
