@@ -51,7 +51,6 @@ export type ValidationResult = {
   status: 'correct' | 'present' | 'wrong';
 };
 
-
 export type FinishedmodalProps = {
   isOpen: boolean;
   isWinner: boolean | null;
