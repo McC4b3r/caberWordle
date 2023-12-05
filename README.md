@@ -21,7 +21,7 @@ The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wi
 
 For this modified Wordle Clone, a variant of the game that allows words that have 2 to 5 unique letters in them, using the list found in `wordlist.txt` (located in the public dir) has been created. 
 
-Your game includes the following:
+The game includes the following:
 
 ### Basic Requirements
 
@@ -42,7 +42,7 @@ Your game includes the following:
 
 ### Test Coverage
 - Tests were written for every component that resides within the components subdirectory of the project. This project has 100% unit test coverage.
-- Tests were written for every human interaction as it pertainsn to the Basic Requirements and Stretch Features yielding 100% integration test coverage.
+- Tests were written for every human interaction as it pertains to the Basic Requirements and Stretch Features yielding 100% integration test coverage.
 - There are 32 tests total that leverage reusable functions to consolidate test logic, and the tests result in 100% passing status.
 
 ## Available Scripts
