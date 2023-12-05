@@ -1,10 +1,11 @@
-# Sandbardle
+# caberWordle
 
-Welcome to Sandbar's take-home interview: Sandbardle.
+This was a take home assessment for a company whose information I will not include in this repo. This is another proof of concept of my abilities as web developer.
+This project is deployed [Here](https://caberwordle.vercel.app/), check it out and play around with it if you'd like.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Interview Prompt
+## Prompt
 
 Create a game similar to [Wordle](https://www.nytimes.com/games/wordle/index.html),
 but using a custom word list we provide containing words  that are 2 to 5 unique characters long.
@@ -18,9 +19,9 @@ The rules of wordle are as follows (from [Wikipedia](https://en.wikipedia.org/wi
 > yellow means it is in the answer but not in the right position,
 > while gray indicates it is not in the answer at all.
 
-For this take-home interview, please create a variant of wordle that allows words that have 2 to 5 unique letters in them, using the list found in `wordlist.txt`.
+For this modified Wordle Clone, a variant of the game that allows words that have 2 to 5 unique letters in them, using the list found in `wordlist.txt` (located in the public dir) has been created. 
 
-Your game should include the following:
+Your game includes the following:
 
 ### Basic Requirements
 
@@ -39,50 +40,16 @@ Your game should include the following:
 - have the on-screen keyboard reflect the state of the clues (keys turn grey, yellow, and green)
 - have the on-screen keyboard accept keyboard events in addition to manual mouse clicking
 
-Note: We care more about feature completion and code quality than aesthetic - a well-tested and readable solution that fulfills all (non-stretch) features but is visually simplistic will be considered more highly than a partially complete but shiny one.
-
-You do **not** need to implement the following:
-
-- Game rules (i.e. "How to Play") overlay
-- Game metrics (the histogram of number of guesses)
-- Dark mode / high contrast mode
-- Feedback, report a bug, etc.
-- Animations
-
-### FAQ
-
-**Can I use a library? Copy code from other sites?**
-
-Yes, but please attribute any copied code to the original source.
-
-You should not use an existing wordle clone, but can use components.
-For example, you can use a library that renders a keyboard on-screen for the keyboard portion of the UI.
-
-**What do I do if a user changes the game settings mid-game?**
-
-Reset the game (guesses & answer)
-
-**What should the layout / interface look like?**
-
-We suggest mimicking the NYTimes's Wordle interface.
-
-**Can I use a component library? CSS framework?**
-
-Yes. You can choose to use whatever you're familiar with.
-
-**Should I include a backend?**
-
-No. The app should be self-contained as a single-page application.
-
-**Can I use something other than react, e.g. Angular, Vue, Svelte, etc.?**
-
-No. Your proficiency with React is a part of what we are evaluating in this interview.
+### Test Coverage
+- Tests were written for every component that resides within the components subdirectory of the project. This project has 100% unit test coverage.
+- Tests were written for every human interaction as it pertainsn to the Basic Requirements and Stretch Features yielding 100% integration test coverage.
+- There are 32 tests total that leverage reusable functions to consolidate test logic, and the tests result in 100% passing status.
 
 ## Available Scripts
 
-In the project directory, you can run:
+If you've decided to clone this project down to try it out locally and after installing the project deps with `npm i`, feel free to use the following:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -90,13 +57,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This take home assessment ultimately concluded with me not moving forward with the company who gave it to me. My one ask for anyone who actually views this code and is a developer is to be a harsh critic and tell me what should be improved. I am on a never-ending journey to improve my skills and would greatly appreciate any criticism to help me make future work like this better. I have decided not to update this code after my submission to preserve the state it was in when it was judged. The one thing I would change after taking time to self reflect is a more robust state management solution aside from my useState implementations in favor of useReducer hooks or with a solution like Redux or Recoil. Thanks for checking this out. 
