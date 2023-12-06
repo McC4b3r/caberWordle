@@ -51,7 +51,7 @@ const App = () => {
 
   return (
     <Box>
-      <Heading display="flex" justifyContent="center" my={4}>Sandbardle</Heading>
+      <Heading display="flex" justifyContent="center" my={4}>caberWordle</Heading>
       <Divider orientation='horizontal' />
       <HardModeToggle
         isHardMode={isHardMode}
